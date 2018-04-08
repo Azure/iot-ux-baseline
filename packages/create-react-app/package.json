@@ -1,14 +1,13 @@
 {
   "name": "@azure-iot/create-react-app",
-  "version": "1.5.2",
+  "version": "0.0.1",
   "keywords": [
     "react"
   ],
   "description": "Create React apps with no build configuration.",
   "repository": "azure-iot-ux-baseline",
   "publishConfig": {
-    "access": "restricted",
-    "tag": "vishwams"
+    "access": "restricted"
   },
   "license": "MIT",
   "engines": {
