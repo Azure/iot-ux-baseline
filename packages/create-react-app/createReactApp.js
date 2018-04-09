@@ -109,7 +109,7 @@ const program = new commander.Command(packageJson.name)
 if (typeof projectName === 'undefined') {
   if (program.info) {
     envinfo.print({
-      packages: ['react', 'react-dom', 'react-scripts'],
+      packages: ['react', 'react-dom', '@azure-iot/react-scripts'],
       noNativeIDE: true,
       duplicates: true,
     });
@@ -284,7 +284,7 @@ function run(
   useYarn
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react', 'react-dom', packageToInstall];
+  const allDependencies = ['react@16', 'react-dom@16', packageToInstall];
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
@@ -381,7 +381,7 @@ function run(
 }
 
 function getInstallPackage(version, originalDirectory) {
-  let packageToInstall = 'react-scripts';
+  let packageToInstall = '@azure-iot/react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;

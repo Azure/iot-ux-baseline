@@ -1,18 +1,20 @@
 {
-  "private": true,
-  "name": "create-react-app",
-  "version": "1.5.2",
+  "name": "@azure-iot/create-azure-iot-react-app",
+  "version": "0.0.2",
+  "publishConfig": {
+    "access": "restricted"
+  },
   "keywords": [
     "react"
   ],
   "description": "Create React apps with no build configuration.",
-  "repository": "facebookincubator/create-react-app",
+  "repository": "azure-iot-ux-baseline",
   "license": "MIT",
   "engines": {
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/facebookincubator/create-react-app/issues"
+    "url": "https://msazure.visualstudio.com/DefaultCollection/One/_git/azure-iot-ux-baseline"
   },
   "files": [
     "index.js",
