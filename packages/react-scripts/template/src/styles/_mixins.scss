@@ -1,0 +1,58 @@
+@import "constants";
+
+@mixin clickable($scale: $clickable-scale, $duration: $interaction-timing) {
+    transition-property: transform, background-color!important;
+    transition-duration: $duration!important;
+
+    transform: scale(1);
+    cursor: pointer;
+    &:active {
+        transform: scale($scale);
+    }
+}
+
+@mixin clickable-shallow() {
+    @include clickable($clickable-scale-shallow, $small-interaction-timing);
+}
+
+@mixin rtl {
+    :global(.rtl) {
+        @content;
+    }
+
+}
+@mixin light-theme {
+    :global(.light-theme) {
+        @content;
+    }
+}
+
+@mixin dark-theme {
+    :global(.dark-theme) {
+        @content;
+    }
+}
+
+/* Safari 10.1+ */
+@mixin safari10 {
+    @media not all and ($safari10-min-resolution) {
+        @content;
+    }
+}
+
+// Box sizing
+@mixin box-sizing($boxmodel) {
+    -webkit-box-sizing: $boxmodel;
+    -moz-box-sizing: $boxmodel;
+    box-sizing: $boxmodel;
+}
+
+  // WebKit-style focus
+
+@mixin tab-focus() {
+    // WebKit-specific. Other browsers will keep their default outline style.
+    // (Initially tried to also force default via `outline: initial`,
+    // but that seems to erroneously remove the outline in Firefox altogether.)
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}

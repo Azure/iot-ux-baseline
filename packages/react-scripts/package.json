@@ -1,6 +1,6 @@
 {
   "name": "@azure-iot/react-scripts",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Configuration and scripts for the baseline Azure IoT Create React App.",
   "repository": "azure-iot-ux-baseline",
   "publishConfig": {

@@ -1,4 +1,5 @@
-$color-app-header-bg: #222;
+@import "../styles/constants";
+@import "../styles/colors";
 
 .App {
   text-align: center;
@@ -10,7 +11,7 @@ $color-app-header-bg: #222;
 }
 
 .App-header {
-  background-color: $color-app-header-bg;
+  background-color: $color-neutral-primary-alt-2;
   height: 150px;
   padding: 20px;
   color: white;
@@ -22,6 +23,7 @@ $color-app-header-bg: #222;
 
 .App-intro {
   font-size: large;
+  margin-top: $gutter-bigger;
 }
 
 @keyframes App-logo-spin {
