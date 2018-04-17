@@ -13,7 +13,6 @@ $masthead-wide-button-width: $masthead-button-width * 4;
 
 .masthead {
     height: $header-height;
-    background-color: $color-bg-masthead;
 }
 
 .branding {
@@ -31,17 +30,12 @@ $masthead-wide-button-width: $masthead-button-width * 4;
     &>*+*:before {
         content: '|';
         margin: 0px 10px;
-        color: $color-border-masthead;
     }
 
     a {
         text-decoration: none;
         padding: $gutter-small;
         margin-left: -$gutter-small;
-        &:active, &:hover, &:focus {
-            background-color: $color-bg-masthead-hover;
-            color: $color-text-bright;
-        }
     }
 }
 
@@ -56,20 +50,7 @@ $masthead-wide-button-width: $masthead-button-width * 4;
         height: $header-height * 0.8;
         line-height: $header-height * 0.8;
         cursor: pointer;
-
-        &:hover {
-            background-color: $color-item-hover;
-        }
     }
-
-    .tall {
-        height: auto;
-        border-bottom: 1px solid $color-border-masthead-toolbar;
-    }
-}
-
-.masthead, .masthead a {
-    color: $color-text-bright;
 }
 
 .toolbar-btn {
@@ -84,16 +65,8 @@ $masthead-wide-button-width: $masthead-button-width * 4;
     vertical-align: top;
     text-decoration: none;
 
-    &:hover {
-        background-color: $color-bg-masthead-hover;
-    }
-
     &.wide {
         width: $masthead-wide-button-width;
-    }
-
-    &.active {
-        background-color: $color-disabled;
     }
 
     .user-label {
@@ -104,7 +77,6 @@ $masthead-wide-button-width: $masthead-button-width * 4;
 }
 
 .toolbar-btn {
-    border-color: $color-border-masthead;
     .user-label {
         text-align: right;
     }
@@ -128,7 +100,6 @@ $masthead-wide-button-width: $masthead-button-width * 4;
 
     .email {
         line-height: $header-height / 2 - 10px;
-        color: $color-text-masthead-sub-label;
         font-size: $font-size-xsmall;
         text-transform: uppercase;
     }
@@ -165,5 +136,31 @@ $masthead-wide-button-width: $masthead-button-width * 4;
 @media (max-width: $masthead-application-breakpoint) {
     .branding *+* {
         display: none;
+    }
+}
+
+@include themify {
+    .masthead, .masthead a {
+        background-color: themed('color-bg-masthead');
+        color: themed('color-text-white');
+    }
+
+    .branding {
+        &>*+*:before {
+            color: themed('color-border-rest');
+        }
+    }
+
+    .branding a, .toolbar li, .toolbar-btn {
+        background-color: themed('color-bg-masthead');
+
+        &:active, &:hover, &:focus {
+            background-color: themed('color-bg-masthead-hover');
+            color: themed('color-text-white');
+        }
+    }
+
+    .toolbar-btn {
+        border-color: themed('color-border-masthead');
     }
 }

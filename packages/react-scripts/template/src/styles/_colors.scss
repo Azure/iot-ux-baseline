@@ -1,2 +1,24 @@
+// DEPRECATED! import the old theme colors till we migrate all
+// the method components to the new colors:
 @import "theme-colors";
-@import "color.overrides";
+
+// first import the color palette:
+@import "~@azure-iot/ux-fluent-css/src/color.palette";
+
+// specify overrides/extensions for the themes:
+$theme-dark: (
+    color-bg-header: $color-grey-1200,
+    color-bg-content: #3d4147,
+    color-text-header: $color-white,
+    color-border-masthead: #4b5157,
+);
+
+$theme-light: (
+    color-bg-header: $color-grey-800,
+    color-text-header: $color-white,
+    color-border-masthead: #4b5157,
+);
+
+// import the rest of the colors and the themify mixin:
+@import "~@azure-iot/ux-fluent-css/src/colors";
+@import "~@azure-iot/ux-fluent-css/src/mixins";

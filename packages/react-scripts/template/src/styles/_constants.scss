@@ -120,7 +120,7 @@ $z-index-tutorial-tips: $z-index-flyout-layer + 8 * $z-index-medium-step;
 $nav-expanded-width: 220px;
 $nav-collapsed-width: $layout-nav-item-height;
 
-$header-nav-height: 48px;
+$header-nav-height: $layout-nav-item-height;
 $header-height: $header-nav-height;
 
 $sidebar-expanded-width: 240px;

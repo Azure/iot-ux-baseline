@@ -21,17 +21,7 @@
     }
 
 }
-@mixin light-theme {
-    :global(.light-theme) {
-        @content;
-    }
-}
 
-@mixin dark-theme {
-    :global(.dark-theme) {
-        @content;
-    }
-}
 
 /* Safari 10.1+ */
 @mixin safari10 {

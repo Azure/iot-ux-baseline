@@ -10,14 +10,11 @@
     top: $layout-masthead-height;
     bottom: 0;
     width: $nav-collapsed-width;
-    background-color: $color-bg-navbar;
     transition-property: width, left, box-shadow;
     transition-duration: $interaction-timing;
-    box-shadow: 0px 0px 0px $color-nav-gradient;
 
     &.expanded {
         width: $nav-expanded-width;
-        box-shadow: 0px 0px 10px $color-nav-gradient;
     }
 }
 
@@ -25,15 +22,8 @@
     width: 100%;
     height: $layout-nav-item-height;
     display: inline-block;
-    color: $color-text-bright;
     text-decoration: none!important;
     position: relative;
-
-    &:active, &:hover, &:focus {
-        color: $color-text-bright;
-        background-color: $color-bg-navbar-active;
-        outline: none;
-    }
 
     @include clickable;
 }
@@ -53,4 +43,23 @@
 
 .link-label {
     width: calc(100% - #{$layout-nav-item-height});
+}
+
+@include themify {
+    .navigation {
+        background-color: themed('color-bg-navbar');
+        box-shadow: 0px 0px 0px $color-nav-gradient;
+
+        &.expanded {
+            box-shadow: 0px 0px 10px $color-nav-gradient;
+        }
+    }
+
+    .link-container {
+        color: $color-text-bright;
+        &:active, &:hover, &:focus {
+            color: $color-text-bright;
+            background-color: themed('color-bg-navbar-hover');
+        }
+    }
 }

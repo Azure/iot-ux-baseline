@@ -206,6 +206,7 @@ dd {
 
 // rtl fix for input group addon - @include rtl does not work
 .rtl {
+    direction: rtl;
 
     .radio-inline {
         padding-right: 20px;

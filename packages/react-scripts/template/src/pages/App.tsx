@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import * as classnames from 'classnames/bind';
+import Shell from '../views/shell';
 import Navigation from '../views/navigation';
 import Masthead from '../views/masthead';
 
@@ -24,18 +25,20 @@ export class App extends React.Component<Properties, State>  {
 
   render() {
     return (
-      <div className={cx('App')}>
-        {this.renderNav()}
-        {this.renderMasthead()}
-        <header className={cx('App-header')}>
-          <img src={logo} className={cx('App-logo')} alt='logo' />
-          <h1 className={cx('App-title')}>Welcome to the Azure IoT Baseline UX</h1>
-        </header>
-        <Switch>
-          <Route exact path='/' component={Home} />
-          <Route path='/about' component={About} />
-        </Switch>
-      </div>
+      <Shell theme='light'>
+        <div className={cx('app')} onClick={this.handleViewCollapse}>
+          {this.renderNav()}
+          {this.renderMasthead()}
+          <header className={cx('header')}>
+            <img src={logo} className={cx('logo')} alt='logo' />
+            <h1 className={cx('title')}>Welcome to the Azure IoT Baseline UX</h1>
+          </header>
+          <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/about' component={About} />
+            </Switch>
+        </div>
+      </Shell>
     );
   }
 
@@ -76,13 +79,22 @@ export class App extends React.Component<Properties, State>  {
           isNavExpanded: !this.state.isNavExpanded
       });
   }
+
+  handleViewCollapse = (e: React.MouseEvent<any>) => {
+      e.stopPropagation();
+      if (this.state.isNavExpanded) {
+        this.setState({
+          isNavExpanded: false
+        });
+      }
+  }
 }
 
 export default App;
 
 const Home = () => (
   <div>
-    <p className={cx('App-intro')}>
+    <p className={cx('intro')}>
       To get started, edit <code>src/pages/App.tsx</code> and save to reload.
     </p>
   </div>
@@ -90,7 +102,7 @@ const Home = () => (
 
 const About = () => (
   <div>
-    <p className={cx('App-intro')}>
+    <p className={cx('intro')}>
       Hello, World!
     </p>
   </div>

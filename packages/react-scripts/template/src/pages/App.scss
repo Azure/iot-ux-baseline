@@ -1,27 +1,26 @@
 @import "../styles/constants";
 @import "../styles/colors";
 
-.App {
+.app {
   text-align: center;
+  height: 100vh;
 }
 
-.App-logo {
+.logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;
 }
 
-.App-header {
-  background-color: $color-neutral-primary-alt-2;
+.header {
   height: 150px;
   padding: 20px;
-  color: white;
 }
 
-.App-title {
+.title {
   font-size: 1.5em;
 }
 
-.App-intro {
+.intro {
   font-size: large;
   margin-top: $gutter-bigger;
 }
@@ -29,4 +28,16 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+@include themify {
+  .app {
+    background-color: themed('color-bg-content');
+    color: themed('color-text-rest');
+  }
+
+  .header {
+    background-color: themed('color-bg-header');
+    color: themed('color-text-header');
+  }
 }
