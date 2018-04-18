@@ -15,6 +15,13 @@ $masthead-wide-button-width: $masthead-button-width * 4;
     height: $header-height;
 }
 
+.masthead, .masthead a {
+    @include themify {
+        background-color: themed('color-bg-masthead');
+        color: themed('color-text-white');
+    }
+}
+
 .branding {
     float: left;
     text-align: left;
@@ -30,6 +37,10 @@ $masthead-wide-button-width: $masthead-button-width * 4;
     &>*+*:before {
         content: '|';
         margin: 0px 10px;
+
+        @include themify {
+            color: themed('color-border-rest');
+        }
     }
 
     a {
@@ -53,6 +64,17 @@ $masthead-wide-button-width: $masthead-button-width * 4;
     }
 }
 
+.branding a, .toolbar li, .toolbar-btn {
+    @include themify {
+        background-color: themed('color-bg-masthead');
+
+        &:active, &:hover, &:focus {
+            background-color: themed('color-bg-masthead-hover');
+            color: themed('color-text-white');
+        }
+    }
+}
+
 .toolbar-btn {
     width: $masthead-button-width;
     height: $header-height;
@@ -69,16 +91,14 @@ $masthead-wide-button-width: $masthead-button-width * 4;
         width: $masthead-wide-button-width;
     }
 
+    @include themify {
+        border-color: themed('color-border-masthead');
+    }
+
     .user-label {
         margin-right: $gutter-normal / 2;
         margin-left: $gutter-normal;
         text-align: left;
-    }
-}
-
-.toolbar-btn {
-    .user-label {
-        text-align: right;
     }
 }
 
@@ -136,31 +156,5 @@ $masthead-wide-button-width: $masthead-button-width * 4;
 @media (max-width: $masthead-application-breakpoint) {
     .branding *+* {
         display: none;
-    }
-}
-
-@include themify {
-    .masthead, .masthead a {
-        background-color: themed('color-bg-masthead');
-        color: themed('color-text-white');
-    }
-
-    .branding {
-        &>*+*:before {
-            color: themed('color-border-rest');
-        }
-    }
-
-    .branding a, .toolbar li, .toolbar-btn {
-        background-color: themed('color-bg-masthead');
-
-        &:active, &:hover, &:focus {
-            background-color: themed('color-bg-masthead-hover');
-            color: themed('color-text-white');
-        }
-    }
-
-    .toolbar-btn {
-        border-color: themed('color-border-masthead');
     }
 }

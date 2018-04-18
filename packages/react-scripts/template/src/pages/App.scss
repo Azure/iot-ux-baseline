@@ -4,6 +4,11 @@
 .app {
   text-align: center;
   height: 100vh;
+
+  @include themify {
+    background-color: themed('color-bg-content');
+    color: themed('color-text-rest');
+  }
 }
 
 .logo {
@@ -14,6 +19,11 @@
 .header {
   height: 150px;
   padding: 20px;
+
+  @include themify {
+    background-color: themed('color-bg-header');
+    color: themed('color-text-header');
+  }
 }
 
 .title {
@@ -28,16 +38,4 @@
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
-}
-
-@include themify {
-  .app {
-    background-color: themed('color-bg-content');
-    color: themed('color-text-rest');
-  }
-
-  .header {
-    background-color: themed('color-bg-header');
-    color: themed('color-text-header');
-  }
 }

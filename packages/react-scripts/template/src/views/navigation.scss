@@ -13,8 +13,16 @@
     transition-property: width, left, box-shadow;
     transition-duration: $interaction-timing;
 
+    @include themify {
+        background-color: themed('color-bg-navbar');
+        box-shadow: 0px 0px 0px themed('color-nav-gradient');
+    }
+
     &.expanded {
         width: $nav-expanded-width;
+        @include themify {
+            box-shadow: 0px 0px 10px themed('color-nav-gradient');
+        }
     }
 }
 
@@ -24,6 +32,14 @@
     display: inline-block;
     text-decoration: none!important;
     position: relative;
+
+    @include themify {
+        color: themed('color-text-bright');
+        &:active, &:hover, &:focus {
+            color: themed('color-text-bright');
+            background-color: themed('color-bg-navbar-hover');
+        }
+    }
 
     @include clickable;
 }
@@ -43,23 +59,4 @@
 
 .link-label {
     width: calc(100% - #{$layout-nav-item-height});
-}
-
-@include themify {
-    .navigation {
-        background-color: themed('color-bg-navbar');
-        box-shadow: 0px 0px 0px $color-nav-gradient;
-
-        &.expanded {
-            box-shadow: 0px 0px 10px $color-nav-gradient;
-        }
-    }
-
-    .link-container {
-        color: $color-text-bright;
-        &:active, &:hover, &:focus {
-            color: $color-text-bright;
-            background-color: themed('color-bg-navbar-hover');
-        }
-    }
 }

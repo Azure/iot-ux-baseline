@@ -24,7 +24,7 @@
     "react-scripts": "./bin/react-scripts.js"
   },
   "dependencies": {
-    "@azure-iot/ux-fluent-css": "^2.0.1",
+    "@azure-iot/ux-fluent-css": "^2.0.2",
     "@types/classnames": "^2.2.3",
     "@types/react": "^16.3.5",
     "@types/react-dom": "^16.0.4",
