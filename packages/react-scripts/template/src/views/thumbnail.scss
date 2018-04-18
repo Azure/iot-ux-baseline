@@ -23,9 +23,9 @@ $search-thumbnail-icon-size: 28px;
 }
 
 @mixin thumbnailColor($bg, $color) {
-    background-color: $bg;
+    background-color: themed($bg) !important;
     :global(.icon) {
-        color: $color;
+        color: themed($color);
     }
 }
 
@@ -37,8 +37,6 @@ $search-thumbnail-icon-size: 28px;
     overflow: hidden;
     flex-grow: 0;
     flex-shrink: 0;
-
-    @include thumbnailColor($color-disabled, white);
 
     :global(.icon) {
         text-align: center;
@@ -54,9 +52,13 @@ $search-thumbnail-icon-size: 28px;
     &.model-map { @include thumbnailSize(36px, 16px) }
     &.list-tile { @include thumbnailSize($list-tile-thumbnail-size, $list-tile-thumbnail-icon-size) }
 
-    &.user, &.user img { @include thumbnailColor($color-bg-thumbnail-user!important, $color-text-bright)}
-    &.device, &.device img { @include thumbnailColor($color-bg-upload!important, $color-text-neutral-primary)}
-    &.integrated, &.integrated img { @include thumbnailColor(transparent, $color-text-default) } // again hard-coded - the intention here is to let the consumer set colors
+
+    @include themify {
+        @include thumbnailColor('color-disabled', 'color-text-white');
+
+        &.user, &.user img { @include thumbnailColor('color-bg-thumbnail-user', 'color-text-bright')}
+        &.device, &.device img { @include thumbnailColor('color-bg-upload', 'color-text-neutral-primary')}
+    }
 
     img {
         position: absolute;
