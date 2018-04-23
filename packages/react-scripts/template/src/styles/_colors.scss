@@ -1,6 +1,6 @@
 // DEPRECATED! import the old theme colors till we migrate all
 // the method components to the new colors:
-@import "theme-colors";
+// @import "theme-colors";
 
 // first import the color palette:
 @import "~@azure-iot/ux-fluent-css/src/color.palette";
@@ -25,4 +25,4 @@ $theme-light: (
 
 // DEPRECATED! import the old theme colors till we migrate all
 // the method components to the new colors:
-@import "mapping.central";
+@import '~@azure-iot/ux-fluent-controls/lib/common/mapping.central';

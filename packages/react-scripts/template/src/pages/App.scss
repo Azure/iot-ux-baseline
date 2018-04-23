@@ -1,5 +1,8 @@
-@import "../styles/constants";
-@import "../styles/colors";
+@import '../styles/colors';
+@import '../styles/constants';
+@import '~@azure-iot/ux-fluent-controls/lib/common/mixins';
+@import '../styles/normalize';
+
 
 .app {
   text-align: center;

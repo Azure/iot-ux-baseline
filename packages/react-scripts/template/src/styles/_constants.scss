@@ -1,19 +1,9 @@
+@import '~@azure-iot/ux-fluent-controls/lib/common/overrides';
 @import "colors";
-
 /*
 The basis for larger building blocks
 */
-$grid-size: 4px;
 
-/*
-Gutters
-*/
-$gutter-xxsmall: 8px;
-$gutter-xsmall: 12px;
-$gutter-small: 16px;
-$gutter-normal: 20px;
-$gutter-big: 32px;
-$gutter-bigger: 40px;
 $header-line-height: 44px;
 
 /*
@@ -21,17 +11,6 @@ $header-line-height: 44px;
 */
 $method-card-margin: 11px; // margin and border of method card
 $method-trigger-height: 34px;
-/*
- Icon
-*/
-$icon-font-family: "icons";
-$icon-size-base: 16px;
-$icon-size-xsmall: $icon-size-base;
-$icon-size-small: 1 * $icon-size-base;
-$icon-size-medium: 2 * $icon-size-base;
-$icon-size-large: 3 * $icon-size-base;
-$icon-size-xlarge: 4 * $icon-size-base;
-$icon-size-xxlarge: 5 * $icon-size-base;
 
 /*
 Interaction constants
@@ -42,44 +21,6 @@ $popover-timing: 200ms;
 
 $clickable-scale: 0.9;
 $clickable-scale-shallow: 0.97;
-
-
-$border-default: 1px solid $color-border-inactive;
-$border-active: 1px solid $color-border-active;
-$border-disabled: 1px solid $color-border-disabled;
-$border-error: 1px solid $color-border-error;
-
-$border-selected: 1px solid $color-border-selected;
-$border-selected-hover: 1px solid $color-border-selected-hover;
-
-$border-gallery-card-default: 1px solid $color-border-gallery-card-default;
-$border-gallery-card-hover: 1px solid $color-border-gallery-card-hover;
-
-$border-pivot-selected: 2px solid $color-border-selected;
-$border-pivot-disabled: 2px solid $color-border-disabled;
-
-$border-toggle-on: 1px solid $color-bg-selected;
-$border-toggle-on-hover: 1px solid $color-bg-selected-hover;
-$border-toggle-on-disabled: 1px solid $color-bg-selected-disabled;
-
-$border-toggle-off: $border-default;
-$border-toggle-off-hover: $border-active;
-$border-toggle-off-disabled: $border-disabled;
-
-
-$shadow-width: 10px;
-$pane-box-shadow: -8px 0px 24px -8px;
-$pane-box-shadow-rtl: 8px 0px 24px -8px;
-
-$shadow-gradient: 0px 0px $shadow-width $color-shadow-gradient;
-$shadow-gradient-no-top: -3px 3px $shadow-width -3px $color-shadow-gradient;
-$shadow-gradient-pane: $pane-box-shadow $color-shadow-gradient-pane;
-$shadow-gradient-pane-rtl: $pane-box-shadow-rtl $color-shadow-gradient-pane;
-$standard-box-shadow: 0px 24px 74px 0px $color-standard-shadow;
-$balloon-shadow: $standard-box-shadow;
-
-$outline-focus-border-width: 1px;
-$outline-focus: $outline-focus-border-width dashed $color-outline-focus;
 
 /*
 Layout constants
@@ -97,25 +38,6 @@ $layout-nav-collapsed-width: 48px;
 $layout-chart-y-axis-width: $gutter-bigger;
 $layout-chart-x-axis-height: $gutter-big;
 $layout-chart-axis-tick-size: 6px;
-
-/*
-Z Index Constants
-*/
-$z-index-large-step: 1000;
-$z-index-medium-step: 100;
-$z-index-small-step: 10;
-
-$z-index-content-layer: 0; // this constant is here for informative purposes - we should always assume content starts at 0
-$z-index-flyout-layer: $z-index-content-layer + 6 * $z-index-large-step;
-$z-index-interruptable-layer: $z-index-content-layer + 9 * $z-index-large-step;
-
-$z-index-chart-tooltip: $z-index-content-layer + 1 * $z-index-small-step;
-$z-index-content-sidebar: $z-index-content-layer + 1 * $z-index-medium-step;
-$z-index-content-global-nav: $z-index-content-layer + 2 * $z-index-medium-step;
-$z-index-flyouts-masthead: $z-index-flyout-layer + 5 * $z-index-medium-step;
-$z-index-flyouts-dropdown: $z-index-flyout-layer + 6 * $z-index-medium-step;
-$z-index-flyouts-inline-btn: $z-index-flyout-layer + 7 * $z-index-medium-step;
-$z-index-tutorial-tips: $z-index-flyout-layer + 8 * $z-index-medium-step;
 
 $nav-expanded-width: 220px;
 $nav-collapsed-width: $layout-nav-item-height;
