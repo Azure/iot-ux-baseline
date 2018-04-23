@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Route, Switch, Link } from 'react-router-dom';
 import * as classnames from 'classnames/bind';
-import Navigation from '../views/navigation';
-import Masthead from '../views/masthead';
+import { Navigation } from '@azure-iot/ux-fluent-controls/lib/components/Navigation';
+import { Masthead } from '@azure-iot/ux-fluent-controls/lib/components/Masthead';
 import { Shell } from '@azure-iot/ux-fluent-controls/lib/components/Shell';
 
 const cx = classnames.bind(require('./App.scss'));
