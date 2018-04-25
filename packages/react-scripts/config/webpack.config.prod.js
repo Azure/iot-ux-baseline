@@ -275,6 +275,15 @@ module.exports = {
           // This loader doesn't use a "test" so it will catch all modules
           // that fall through the other loaders.
           {
+            // copy all resjsons to static/, preserving folder structure relative to src/
+            include: [/\.resjson$/],
+            loader: require.resolve('file-loader'),
+            options: {
+              name: 'static/[path][name].[hash:8].[ext]',
+              context: paths.appSrc,
+            },
+          },
+          {
             loader: require.resolve('file-loader'),
             // Exclude `js` files to keep "css" loader working as it injects
             // it's runtime that would otherwise processed through "file" loader.

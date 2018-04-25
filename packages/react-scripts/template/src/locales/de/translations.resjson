@@ -1,0 +1,12 @@
+{
+  "title": "Willkommen bei der Azure IoT Grundlinie Benutzererfahrung",
+  "masthead": "Azure IoT Grundlinie Benutzererfahrung",
+  "description": {
+    "home": "Bearbeiten Sie <1>src/pages/App.tsx</1> und speichern Sie, um neu zu starten.",
+    "about": "Hallo Welt!"
+  },
+  "navigation": {
+    "home": "Zuhause",
+    "about": "Über"
+  }
+}

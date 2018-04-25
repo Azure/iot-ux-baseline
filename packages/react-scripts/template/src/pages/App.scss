@@ -3,6 +3,11 @@
 @import '~@azure-iot/ux-fluent-controls/lib/common/mixins';
 @import '../styles/normalize';
 
+@font-face {
+  font-family: "icons";
+  src: url("../styles/fonts/segmdl2.1.61.woff") format('woff'),
+      url("../styles/fonts/segmdl2.1.61.ttf") format('truetype');
+}
 
 .app {
   text-align: center;
