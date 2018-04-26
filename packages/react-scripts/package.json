@@ -23,6 +23,10 @@
   "bin": {
     "react-scripts": "./bin/react-scripts.js"
   },
+  "scripts": {
+    "build": "node scripts/build.js",
+    "watch": "node scripts/start.js"
+  },
   "dependencies": {
     "@azure-iot/ux-fluent-controls": "^0.0.1",
     "@azure-iot/ux-fluent-css": "^2.0.2",
