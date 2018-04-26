@@ -70,7 +70,7 @@ module.exports = {
     // This does not produce a real file. It's just the virtual path that is
     // served by WebpackDevServer in development. This is the JS bundle
     // containing code from all our entry points, and the Webpack runtime.
-    filename: 'static/js/bundle.js',
+    filename: 'static/js/[name].js',
     // There are also additional JS chunk files if you use code splitting.
     chunkFilename: 'static/js/[name].chunk.js',
     // This is the URL that app is served from. We use "/" in development.
@@ -290,6 +290,10 @@ module.exports = {
       template: paths.appHtml,
     }),
     // Add module names to factory functions so they appear in browser profiler.
+    // use predicatable names for modules and chunks instead of a
+    // non-deterministic number to improve our cacheability:
+    // https://medium.com/webpack/predictable-long-term-caching-with-webpack-d3eee1d3fa31
+    // use NamedModules instead of HashedModuleIdsPlugin because it compresses better.
     new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
@@ -311,11 +315,26 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // put all code in node_modules into the vendor folder. This
+    // has to be done after we extract all our other common code:
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor',
+      minChunks: function isExternal(module) {
+        return module.context && module.context.includes('/node_modules/');
+      },
+    }),
+    // after all the other common chunks have been removed, extract all webpack
+    // boilerplate into a separate 'manifest' chunk so we improve our cacheability:
+    // https://webpack.js.org/guides/caching/#extracting-boilerplate
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'manifest',
+      minChunks: Infinity,
+    }),
     // Extract css from inline files, does not do css parsing.
     // We should do this after the commons chunking so we don't duplicate
     // the common framework/method styles across all chunks
     new ExtractTextPlugin({
-      filename: `static/media/[name].[hash:8].css`,
+      filename: `static/css/[name].css`,
       allChunks: true, // extract from all chunks, not just the entry points
     }),
     // Perform type checking and linting in a separate process to speed up compilation
