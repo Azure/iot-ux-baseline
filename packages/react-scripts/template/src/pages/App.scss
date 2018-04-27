@@ -1,12 +1,11 @@
 @import '../styles/colors';
+@import '../styles/mixins';
 @import '../styles/constants';
-@import '~@azure-iot/ux-fluent-controls/lib/common/mixins';
-@import '../styles/normalize';
 
 @font-face {
-  font-family: "icons";
-  src: url("../styles/fonts/segmdl2.1.61.woff") format('woff'),
-      url("../styles/fonts/segmdl2.1.61.ttf") format('truetype');
+  font-family: $icon-font-family;
+  src: url("@azure-iot/ux-fluent-css/src/fonts/segmdl2.1.61.woff") format('woff'),
+      url("@azure-iot/ux-fluent-css/src/fonts/segmdl2.1.61.ttf") format('truetype');
 }
 
 .app {
