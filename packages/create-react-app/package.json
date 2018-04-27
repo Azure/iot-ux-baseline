@@ -1,6 +1,7 @@
 {
   "name": "@azure-iot/create-azure-iot-react-app",
   "version": "0.0.4",
+  "private": true,
   "publishConfig": {
     "access": "restricted"
   },

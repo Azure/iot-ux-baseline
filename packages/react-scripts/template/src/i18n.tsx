@@ -51,7 +51,7 @@ if (process.env.NODE_ENV !== 'production' && window) {
   window['i18n'] = i18nInstance;
 }
 
-const Context = React.createContext<TranslationFunction>();
+const Context = React.createContext<TranslationFunction>(originalT);
 export const I18n = Context.Consumer;
 
 export class I18nContainer extends React.PureComponent {
