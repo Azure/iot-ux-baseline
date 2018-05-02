@@ -18,6 +18,16 @@
   }
 }
 
+.content {
+  // shift content to account for the navbar
+  margin-left: $layout-nav-item-height;
+
+  @include rtl {
+    margin-left: initial;
+    margin-right: $layout-nav-item-height;
+  }
+}
+
 .logo {
   animation: App-logo-spin infinite 20s linear;
   height: 80px;

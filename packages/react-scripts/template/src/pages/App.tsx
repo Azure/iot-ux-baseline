@@ -32,14 +32,16 @@ export class App extends React.Component<Properties, State>  {
           <div className={cx('app')} onClick={this.handleViewCollapse}>
             {this.renderNav(loc)}
             {this.renderMasthead(loc)}
-            <header className={cx('header')}>
-              <img src={logo} className={cx('logo')} alt='logo' />
-              <h1 className={cx('title')}>{loc('title')}</h1>
-            </header>
-            <Switch>
+            <div className={cx('content')}>
+              <header className={cx('header')}>
+                <img src={logo} className={cx('logo')} alt='logo' />
+                <h1 className={cx('title')}>{loc('title')}</h1>
+              </header>
+              <Switch>
                 <Route exact path='/' component={Home} />
                 <Route path='/about' component={About} />
               </Switch>
+            </div>
           </div>
         </Shell>
       }</I18n>

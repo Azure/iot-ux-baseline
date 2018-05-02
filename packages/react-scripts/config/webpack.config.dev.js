@@ -315,12 +315,13 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
-    // put all code in node_modules into the vendor folder. This
+    // Put all external code (i.e., not in src/) into the vendor folder: we assume
+    // this will not change often, so can be separated to improve cacheability. This
     // has to be done after we extract all our other common code:
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vendor',
       minChunks: function isExternal(module) {
-        return module.context && module.context.includes('/node_modules/');
+        return module.context && !module.context.includes(paths.appSrc);
       },
     }),
     // after all the other common chunks have been removed, extract all webpack
