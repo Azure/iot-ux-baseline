@@ -15,20 +15,24 @@ interface Properties {
 
 interface State {
   isNavExpanded: boolean;
+  isUserMenuExpanded: boolean;
+  theme: string;
 }
 
 export class App extends React.Component<Properties, State>  {
   constructor(props: Properties) {
       super(props);
       this.state = {
-        isNavExpanded: false
+        isNavExpanded: false,
+        isUserMenuExpanded: false,
+        theme: 'light'
       };
   }
 
   render() {
     return (
       <I18n>{loc =>
-        <Shell theme='light' isRtl={isRtl()}>
+        <Shell theme={this.state.theme} isRtl={isRtl()}>
           <div className={cx('app')} onClick={this.handleViewCollapse}>
             {this.renderNav(loc)}
             {this.renderMasthead(loc)}
@@ -71,10 +75,23 @@ export class App extends React.Component<Properties, State>  {
 
   renderMasthead(loc: TranslationFunction) {
     return <Masthead
-      branding={<Link to='/'>{loc('masthead')}</Link>}
+      branding={<Link to='/' title={loc('navigation.home')}>{loc('masthead')}</Link>}
       user={{
-          displayName: 'John Smith',
-          email: 'jsmith@example.com'
+        displayName: 'John Smith',
+        email: 'jsmith@example.com',
+        menuExpanded: this.state.isUserMenuExpanded,
+        onMenuClick: this.handleUserMenuToggle,
+        menuItems: [
+          {
+            key: 'toggle-theme',
+            label: 'Toggle theme',
+            onClick: this.handleThemeToggle
+          }
+        ]
+      }}
+      attr={{
+        userMenuAriaLabel: 'User Menu',
+        mobileMenuAriaLabel: 'Application Menu'
       }}
     />;
   }
@@ -93,6 +110,18 @@ export class App extends React.Component<Properties, State>  {
           isNavExpanded: false
         });
       }
+  }
+
+  handleThemeToggle = () => {
+    this.setState({
+      theme: this.state.theme === 'light' ? 'dark' : 'light'
+    });
+  }
+  
+  handleUserMenuToggle = () => {
+    this.setState({
+      isUserMenuExpanded: !this.state.isUserMenuExpanded
+    });
   }
 }
 
