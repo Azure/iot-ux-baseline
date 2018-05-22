@@ -207,6 +207,9 @@ module.exports = {
                     },
                     {
                       loader: 'sass-loader',
+                      options: {
+                        includePaths: [path.join(paths.appSrc, '/styles/')],
+                      },
                     },
                   ],
                 },
