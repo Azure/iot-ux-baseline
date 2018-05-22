@@ -1,14 +1,13 @@
 {
   "compilerOptions": {
     "outDir": "build/dist",
-    "module": "esnext",
-    "target": "esnext",
-    "lib": ["esnext", "dom"],
+    "target": "es6",
+    "module": "es6",
+    "moduleResolution": "node",
     "baseUrl": ".",
     "sourceMap": true,
     "allowJs": true,
     "jsx": "react",
-    "moduleResolution": "node",
     "rootDir": "src",
     "declaration": false,
     "experimentalDecorators": true,

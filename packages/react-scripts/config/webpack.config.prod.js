@@ -16,13 +16,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const ManifestPlugin = require('webpack-manifest-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const paths = require('./paths');
 const getClientEnvironment = require('./env');
 
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 const TsconfigPathsPlugin = require('tsconfig-paths-webpack-plugin');
+const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // It requires a trailing slash, or the file assets will get an incorrect path.
@@ -112,14 +112,6 @@ module.exports = {
       '.tsx',
     ],
     alias: {
-      // @remove-on-eject-begin
-      // Resolve Babel runtime relative to react-scripts.
-      // It usually still works on npm 3 without this but it would be
-      // unfortunate to rely on, as react-scripts could be symlinked,
-      // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -142,31 +134,6 @@ module.exports = {
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
 
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
-      {
-        test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
-              // TODO: consider separate config for production,
-              // e.g. to enable no-console and no-debugger only in production.
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
-              ignore: false,
-              useEslintrc: false,
-              // @remove-on-eject-end
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -182,21 +149,11 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // Process TS to JS, and JS with Babel.
+          // Process TS to ES6:
           {
             test: /\.(js|jsx|mjs|ts|tsx)$/,
             include: paths.appSrc,
             use: [
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  // @remove-on-eject-begin
-                  babelrc: false,
-                  presets: [require.resolve('babel-preset-react-app')],
-                  // @remove-on-eject-end
-                  compact: true,
-                },
-              },
               {
                 loader: require.resolve('ts-loader'),
                 options: {
@@ -246,18 +203,6 @@ module.exports = {
                         // Necessary for external CSS imports to work
                         // https://github.com/facebookincubator/create-react-app/issues/2677
                         ident: 'postcss',
-                        plugins: () => [
-                          require('postcss-flexbugs-fixes'),
-                          autoprefixer({
-                            browsers: [
-                              '>1%',
-                              'last 4 versions',
-                              'Firefox ESR',
-                              'not ie < 9', // React doesn't support IE8 anyway
-                            ],
-                            flexbox: 'no-2009',
-                          }),
-                        ],
                       },
                     },
                     {
@@ -335,24 +280,24 @@ module.exports = {
     // Otherwise React will be compiled in the very slow development mode.
     new webpack.DefinePlugin(env.stringified),
     // Minify the code.
-    new webpack.optimize.UglifyJsPlugin({
+    new UglifyJSPlugin({
       parallel: true,
-      compress: {
-        warnings: false,
-        // Disabled because of an issue with Uglify breaking seemingly valid code:
-        // https://github.com/facebookincubator/create-react-app/issues/2376
-        // Pending further investigation:
-        // https://github.com/mishoo/UglifyJS2/issues/2011
-        comparisons: false,
-      },
-      mangle: {
-        safari10: true,
-      },
-      output: {
-        comments: false,
-        // Turned on because emoji and regex is not minified properly using default
-        // https://github.com/facebookincubator/create-react-app/issues/2488
-        ascii_only: true,
+      uglifyOptions: {
+        ecma: 6,
+        warnings: true,
+        compress: {
+          // disable optimizations for if/return and if/continue because
+          // uglifyjs has problems compressing it for some valid es6 code:
+          if_return: false,
+          inline: false,
+        },
+        output: {
+          comments: false,
+          beautify: false,
+          // Turned on because emoji and regex is not minified properly using default
+          // https://github.com/facebookincubator/create-react-app/issues/2488
+          ascii_only: true,
+        },
       },
       sourceMap: shouldUseSourceMap,
     }),

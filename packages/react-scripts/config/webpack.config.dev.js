@@ -15,7 +15,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CaseSensitivePathsPlugin = require('case-sensitive-paths-webpack-plugin');
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const WatchMissingNodeModulesPlugin = require('react-dev-utils/WatchMissingNodeModulesPlugin');
-const eslintFormatter = require('react-dev-utils/eslintFormatter');
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
@@ -107,14 +106,6 @@ module.exports = {
       '.tsx',
     ],
     alias: {
-      // @remove-on-eject-begin
-      // Resolve Babel runtime relative to react-scripts.
-      // It usually still works on npm 3 without this but it would be
-      // unfortunate to rely on, as react-scripts could be symlinked,
-      // and thus babel-runtime might not be resolvable from the source.
-      'babel-runtime': path.dirname(
-        require.resolve('babel-runtime/package.json')
-      ),
       // @remove-on-eject-end
       // Support React Native Web
       // https://www.smashingmagazine.com/2016/08/a-glimpse-into-the-future-with-react-native-for-web/
@@ -137,29 +128,6 @@ module.exports = {
       // We are waiting for https://github.com/facebookincubator/create-react-app/issues/2176.
       // { parser: { requireEnsure: false } },
 
-      // First, run the linter.
-      // It's important to do this before Babel processes the JS.
-      {
-        test: /\.(js|jsx|mjs)$/,
-        enforce: 'pre',
-        use: [
-          {
-            options: {
-              formatter: eslintFormatter,
-              eslintPath: require.resolve('eslint'),
-              // @remove-on-eject-begin
-              baseConfig: {
-                extends: [require.resolve('eslint-config-react-app')],
-              },
-              ignore: false,
-              useEslintrc: false,
-              // @remove-on-eject-end
-            },
-            loader: require.resolve('eslint-loader'),
-          },
-        ],
-        include: paths.appSrc,
-      },
       {
         // "oneOf" will traverse all following loaders until one will
         // match the requirements. When no loader matches it will fall
@@ -176,24 +144,11 @@ module.exports = {
               name: 'static/media/[name].[hash:8].[ext]',
             },
           },
-          // Process TS to JS, and JS with Babel.
+          // Process TS to ES6:
           {
             test: /\.(js|jsx|mjs|ts|tsx)$/,
             include: paths.appSrc,
             use: [
-              {
-                loader: require.resolve('babel-loader'),
-                options: {
-                  // @remove-on-eject-begin
-                  babelrc: false,
-                  presets: [require.resolve('babel-preset-react-app')],
-                  // @remove-on-eject-end
-                  // This is a feature of `babel-loader` for webpack (not Babel itself).
-                  // It enables caching results in ./node_modules/.cache/babel-loader/
-                  // directory for faster rebuilds.
-                  cacheDirectory: true,
-                },
-              },
               {
                 loader: require.resolve('ts-loader'),
                 options: {
@@ -227,18 +182,6 @@ module.exports = {
                     // Necessary for external CSS imports to work
                     // https://github.com/facebookincubator/create-react-app/issues/2677
                     ident: 'postcss',
-                    plugins: () => [
-                      require('postcss-flexbugs-fixes'),
-                      autoprefixer({
-                        browsers: [
-                          '>1%',
-                          'last 4 versions',
-                          'Firefox ESR',
-                          'not ie < 9', // React doesn't support IE8 anyway
-                        ],
-                        flexbox: 'no-2009',
-                      }),
-                    ],
                   },
                 },
                 {
