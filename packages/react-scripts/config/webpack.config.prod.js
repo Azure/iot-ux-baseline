@@ -287,7 +287,6 @@ module.exports = {
       parallel: true,
       uglifyOptions: {
         ecma: 6,
-        warnings: true,
         compress: {
           // disable optimizations for if/return and if/continue because
           // uglifyjs has problems compressing it for some valid es6 code:
