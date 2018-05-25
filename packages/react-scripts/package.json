@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@azure-iot/ux-fluent-controls": "^0.3.0",
-    "@azure-iot/ux-fluent-css": "^2.0.4",
+    "@azure-iot/ux-fluent-css": "^2.0.9",
     "@types/classnames": "^2.2.3",
     "@types/node": "^8.0.26",
     "@types/react": "^16.3.5",

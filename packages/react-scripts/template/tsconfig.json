@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
     "outDir": "build/dist",
-    "target": "es6",
-    "module": "commonjs",
+    "target": "esnext",
+    "module": "esnext",
     "moduleResolution": "node",
     "baseUrl": ".",
     "sourceMap": true,
