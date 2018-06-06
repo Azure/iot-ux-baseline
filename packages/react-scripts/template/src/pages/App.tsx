@@ -72,9 +72,9 @@ export class App extends React.Component<Properties, State>  {
     const navTabIndex = 5;
 
     return (
-      <Navigation 
-        isExpanded={this.state.isNavExpanded} 
-        onClick={this.handleGlobalNavToggle} 
+      <Navigation
+        isExpanded={this.state.isNavExpanded}
+        onClick={this.handleGlobalNavToggle}
         attr={{
           navButton: {
             title: this.state.isNavExpanded ? 'Collapse side navigation' : 'Expand side navigation'
@@ -94,7 +94,7 @@ export class App extends React.Component<Properties, State>  {
 
   renderMasthead(loc: TranslationFunction) {
     return <Masthead
-      branding={<Link to='/' title={loc('navigation.home')}>{loc('masthead')}</Link>}
+      branding={<Link to='/' title={loc('navigation.home')} className={cx('link', 'masthead-branding')}>{loc('masthead')}</Link>}
       user={{
         displayName: 'John Smith',
         email: 'jsmith@example.com',
@@ -136,7 +136,7 @@ export class App extends React.Component<Properties, State>  {
       theme: this.state.theme === 'light' ? 'dark' : 'light'
     });
   }
-  
+
   handleUserMenuToggle = () => {
     this.setState({
       isUserMenuExpanded: !this.state.isUserMenuExpanded

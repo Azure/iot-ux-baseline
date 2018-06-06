@@ -95,3 +95,9 @@
   display: inline-block;
   vertical-align: top;
 }
+
+.masthead-branding {
+  @include themify {
+      color: themed('color-text-white') !important; // override the default 'link' colors
+  }
+}
