@@ -69,7 +69,6 @@ export class App extends React.Component<Properties, State>  {
         title: loc('navigation.about')
       }
     ];
-    const navTabIndex = 5;
 
     return (
       <Navigation
@@ -77,13 +76,12 @@ export class App extends React.Component<Properties, State>  {
         onClick={this.handleGlobalNavToggle}
         attr={{
           navButton: {
-            title: this.state.isNavExpanded ? 'Collapse side navigation' : 'Expand side navigation'
+            title: this.state.isNavExpanded ? 'Collapse side navigation' : 'Expand side navigation',
           },
-          tabIndex: navTabIndex
         }}
       >
         {items.map(x => (
-            <Link to={x.to} className={cx('link-container')} key={x.key} title={x.title} tabIndex={navTabIndex} aria-label={x.title}>
+            <Link to={x.to} className={cx('link-container')} key={x.key} title={x.title}>
                 <div className={cx('link-thumbnail', x.icon)} />
                 <div className={cx('link-label', 'inline-text-overflow')}>{x.label}</div>
             </Link>

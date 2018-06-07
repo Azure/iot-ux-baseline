@@ -71,10 +71,14 @@
           background-color: themed('color-bg-navbar-hover');
           outline: none;
       }
-      &:focus {
-        outline: 1px dashed themed('color-border-focus');
-      }
   }
+
+  &:focus {
+    outline-offset: -1px;
+    @include themify {
+        outline: 1px dashed themed('color-border-focus');
+    }
+}
 
   @include clickable;
 }
