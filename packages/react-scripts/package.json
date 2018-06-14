@@ -1,6 +1,6 @@
 {
   "name": "@azure-iot/react-scripts",
-  "version": "0.3.7",
+  "version": "0.3.8",
   "description": "Configuration and scripts for the baseline Azure IoT Create React App.",
   "repository": "azure-iot-ux-baseline",
   "publishConfig": {
@@ -28,7 +28,7 @@
     "watch": "node scripts/start.js"
   },
   "dependencies": {
-    "@azure-iot/ux-fluent-controls": "^0.4.8",
+    "@azure-iot/ux-fluent-controls": "^0.4.9",
     "@azure-iot/ux-fluent-css": "^2.0.13",
     "@types/classnames": "^2.2.3",
     "@types/node": "^8.0.26",
