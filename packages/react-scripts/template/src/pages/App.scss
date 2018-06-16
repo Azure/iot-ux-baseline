@@ -22,6 +22,9 @@
   // shift content to account for the navbar
   margin-left: $layout-nav-item-height;
 
+  height: calc(100% - #{$layout-nav-item-height});
+  overflow: auto;
+
   @include rtl {
     margin-left: initial;
     margin-right: $layout-nav-item-height;
