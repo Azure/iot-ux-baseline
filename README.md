@@ -39,7 +39,7 @@ Just create a project, and you’re good to go.
 To create a new app, run a single command:
 
 ```sh
-npx create-react-app my-app
+npx @azure-iot/create-azure-iot-react-app my-app
 ```
 
 *([npx](https://medium.com/@maybekatz/introducing-npx-an-npm-package-runner-55f7d4bd282b) comes with npm 5.2+ and higher, see [instructions for older npm versions](https://gist.github.com/gaearon/4064d3c23a77c74a3614c498a8bb1c5f))*
