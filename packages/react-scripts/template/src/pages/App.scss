@@ -39,15 +39,6 @@
 .header {
   height: 150px;
   padding: 20px;
-
-  @include themify {
-    background-color: themed('color-bg-header');
-    color: themed('color-text-header');
-  }
-}
-
-.title {
-  font-size: 1.5em;
 }
 
 .intro {

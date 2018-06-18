@@ -39,7 +39,7 @@ export class App extends React.Component<Properties, State>  {
             <div className={cx('content')}>
               <header className={cx('header')}>
                 <img src={logo} className={cx('logo')} alt='logo' />
-                <h1 className={cx('title')}>{loc('title')}</h1>
+                <h1>{loc('title')}</h1>
               </header>
               <Switch>
                 <Route exact path='/' component={Home} />

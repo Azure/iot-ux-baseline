@@ -11,7 +11,7 @@ If something doesn’t work, please [file an issue](https://github.com/facebooki
 ## Quick Overview
 
 ```sh
-npx create-react-app my-app
+npx @azure-iot/create-azure-iot-react-app my-app
 cd my-app
 npm start
 ```
@@ -165,7 +165,10 @@ Please refer to the [User Guide](https://github.com/facebookincubator/create-rea
 
 Your environment will have everything you need to build a modern single-page React app:
 
-* React, JSX, ES6, and Flow syntax support.
+* React and Typescript syntax support.
+* Light and Dark themes with [Azure IoT Fluent CSS](https://aka.ms/iotfluentcss).
+* [Azure IoT Fluent Controls](https://aka.ms/iotfluentcontrols).
+* Built-in support for internationalization and utilities to help with RTL styling.
 * Language extras beyond ES6 like the object spread operator.
 * Autoprefixed CSS, so you don’t need `-webkit` or other prefixes.
 * A fast interactive unit test runner with built-in support for coverage reporting.
