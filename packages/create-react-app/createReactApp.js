@@ -284,7 +284,13 @@ function run(
   useYarn
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react@16', 'react-dom@16', packageToInstall];
+  const allDependencies = [
+    'react@16.0.0',
+    'react-dom@16.0.0',
+    '@microsoft/azure-iot-ux-fluent-controls@4.0.0',
+    '@microsoft/azure-iot-ux-fluent-css@4.0.0',
+    packageToInstall,
+  ];
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
@@ -547,7 +553,13 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = [
+    'react',
+    'react-dom',
+    'react-scripts',
+    '@microsoft/azure-iot-ux-fluent-controls',
+    '@microsoft/azure-iot-ux-fluent-css',
+  ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
@@ -602,6 +614,14 @@ function setCaretRangeForRuntimeDeps(packageName) {
 
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');
+  makeCaretRange(
+    packageJson.dependencies,
+    '@microsoft/azure-iot-ux-fluent-css'
+  );
+  makeCaretRange(
+    packageJson.dependencies,
+    '@microsoft/azure-iot-ux-fluent-controls'
+  );
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
