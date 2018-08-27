@@ -28,8 +28,8 @@
     "watch": "node scripts/start.js"
   },
   "dependencies": {
-    "@microsoft/azure-iot-ux-fluent-controls": "^1.0.1",
-    "@microsoft/azure-iot-ux-fluent-css": "^1.0.0",
+    "@microsoft/azure-iot-ux-fluent-controls": "^4.0.0",
+    "@microsoft/azure-iot-ux-fluent-css": "^4.0.0",
     "@types/classnames": "^2.2.3",
     "@types/node": "^8.0.26",
     "@types/react": "^16.3.5",
