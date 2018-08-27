@@ -1,5 +1,5 @@
 {
-  "name": "@azure-iot/create-azure-iot-react-app",
+  "name": "@microsoft/azure-iot-create-react-app",
   "version": "0.0.5",
   "private": true,
   "publishConfig": {
@@ -15,7 +15,7 @@
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://msazure.visualstudio.com/DefaultCollection/One/_git/azure-iot-ux-baseline"
+    "url": "https://github.com/Azure/iot-ux-baseline"
   },
   "files": [
     "index.js",

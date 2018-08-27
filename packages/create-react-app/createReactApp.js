@@ -109,7 +109,7 @@ const program = new commander.Command(packageJson.name)
 if (typeof projectName === 'undefined') {
   if (program.info) {
     envinfo.print({
-      packages: ['react', 'react-dom', '@azure-iot/react-scripts'],
+      packages: ['react', 'react-dom', '@microsoft/azure-iot-react-scripts'],
       noNativeIDE: true,
       duplicates: true,
     });
@@ -381,7 +381,7 @@ function run(
 }
 
 function getInstallPackage(version, originalDirectory) {
-  let packageToInstall = '@azure-iot/react-scripts';
+  let packageToInstall = '@microsoft/azure-iot-react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;

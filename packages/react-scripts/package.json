@@ -1,5 +1,5 @@
 {
-  "name": "@azure-iot/react-scripts",
+  "name": "@microsoft/azure-iot-react-scripts",
   "version": "0.3.12",
   "description": "Configuration and scripts for the baseline Azure IoT Create React App.",
   "repository": "azure-iot-ux-baseline",
@@ -11,7 +11,7 @@
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://msazure.visualstudio.com/DefaultCollection/One/_git/azure-iot-ux-baseline"
+    "url": "https://github.com/Azure/iot-ux-baseline"
   },
   "files": [
     "bin",
