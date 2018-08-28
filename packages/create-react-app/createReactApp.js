@@ -109,7 +109,7 @@ const program = new commander.Command(packageJson.name)
 if (typeof projectName === 'undefined') {
   if (program.info) {
     envinfo.print({
-      packages: ['react', 'react-dom', '@azure-iot/react-scripts'],
+      packages: ['react', 'react-dom', '@microsoft/azure-iot-react-scripts'],
       noNativeIDE: true,
       duplicates: true,
     });
@@ -284,7 +284,13 @@ function run(
   useYarn
 ) {
   const packageToInstall = getInstallPackage(version, originalDirectory);
-  const allDependencies = ['react@16', 'react-dom@16', packageToInstall];
+  const allDependencies = [
+    'react@16.x',
+    'react-dom@16.x',
+    '@microsoft/azure-iot-ux-fluent-controls@4.0.1',
+    '@microsoft/azure-iot-ux-fluent-css@4.0.0',
+    packageToInstall,
+  ];
 
   console.log('Installing packages. This might take a couple of minutes.');
   getPackageName(packageToInstall)
@@ -381,7 +387,7 @@ function run(
 }
 
 function getInstallPackage(version, originalDirectory) {
-  let packageToInstall = '@azure-iot/react-scripts';
+  let packageToInstall = '@microsoft/azure-iot-react-scripts';
   const validSemver = semver.valid(version);
   if (validSemver) {
     packageToInstall += `@${validSemver}`;
@@ -547,7 +553,13 @@ function checkAppName(appName) {
   }
 
   // TODO: there should be a single place that holds the dependencies
-  const dependencies = ['react', 'react-dom', 'react-scripts'].sort();
+  const dependencies = [
+    'react',
+    'react-dom',
+    'react-scripts',
+    '@microsoft/azure-iot-ux-fluent-controls',
+    '@microsoft/azure-iot-ux-fluent-css',
+  ].sort();
   if (dependencies.indexOf(appName) >= 0) {
     console.error(
       chalk.red(
@@ -602,6 +614,14 @@ function setCaretRangeForRuntimeDeps(packageName) {
 
   makeCaretRange(packageJson.dependencies, 'react');
   makeCaretRange(packageJson.dependencies, 'react-dom');
+  makeCaretRange(
+    packageJson.dependencies,
+    '@microsoft/azure-iot-ux-fluent-css'
+  );
+  makeCaretRange(
+    packageJson.dependencies,
+    '@microsoft/azure-iot-ux-fluent-controls'
+  );
 
   fs.writeFileSync(packagePath, JSON.stringify(packageJson, null, 2));
 }
