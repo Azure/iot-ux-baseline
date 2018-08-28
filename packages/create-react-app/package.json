@@ -1,10 +1,6 @@
 {
   "name": "@microsoft/azure-iot-create-react-app",
   "version": "0.0.5",
-  "private": true,
-  "publishConfig": {
-    "access": "restricted"
-  },
   "keywords": [
     "react"
   ],
@@ -15,7 +11,7 @@
     "node": ">=4"
   },
   "bugs": {
-    "url": "https://github.com/Azure/iot-ux-baseline"
+    "url": "https://github.com/Azure/iot-ux-baseline/issues"
   },
   "files": [
     "index.js",
