@@ -2,7 +2,6 @@
   "workspaces": [
     "packages/*"
   ],
-  "private": true,
   "scripts": {
     "build": "lerna run build",
     "changelog": "lerna-changelog",
