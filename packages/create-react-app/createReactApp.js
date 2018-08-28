@@ -287,7 +287,7 @@ function run(
   const allDependencies = [
     'react@16.0.0',
     'react-dom@16.0.0',
-    '@microsoft/azure-iot-ux-fluent-controls@4.0.0',
+    '@microsoft/azure-iot-ux-fluent-controls@4.0.1',
     '@microsoft/azure-iot-ux-fluent-css@4.0.0',
     packageToInstall,
   ];
