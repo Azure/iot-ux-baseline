@@ -1,0 +1,5 @@
+// specify custom colors and overrides for the app:
+@import "./colors.overrides.scss";
+
+// import the default colors:
+@import "~@microsoft/azure-iot-ux-fluent-css/src/colors";

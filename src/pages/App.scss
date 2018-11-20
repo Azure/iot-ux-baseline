@@ -1,32 +1,81 @@
-.App {
+@import '../styles/colors';
+@import '../styles/mixins';
+@import '../styles/constants';
+
+@font-face {
+  font-family: $icon-font-family;
+  src: url("~@microsoft/azure-iot-ux-fluent-css/src/fonts/segmdl2.1.61.woff") format('woff'),
+      url("~@microsoft/azure-iot-ux-fluent-css/src/fonts/segmdl2.1.61.ttf") format('truetype');
+}
+
+.app {
   text-align: center;
-}
+  height: 100vh;
 
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 40vmin;
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+  @include themify {
+    background-color: themed('color-bg-content');
+    color: themed('color-text-rest');
   }
-  to {
-    transform: rotate(360deg);
+}
+
+.content {
+  // shift content to account for the navbar
+  margin-left: $layout-nav-item-height;
+
+  height: calc(100% - #{$layout-nav-item-height});
+  overflow: auto;
+
+  @include rtl {
+    margin-left: initial;
+    margin-right: $layout-nav-item-height;
+  }
+}
+
+.link-container {
+  width: 100%;
+  height: $layout-nav-item-height;
+  display: inline-block;
+  text-decoration: none!important;
+  position: relative;
+
+  @include themify {
+      color: themed('color-text-white');
+      &:active, &:hover, &:focus {
+          color: themed('color-text-white');
+          background-color: themed('color-bg-navbar-hover');
+          outline: none;
+      }
+  }
+
+  &:focus {
+    outline-offset: -1px;
+    @include themify {
+        outline: 1px dashed themed('color-border-focus');
+    }
+}
+
+  @include clickable;
+}
+
+.link-thumbnail {
+  width: $layout-nav-item-height;
+  text-align: center;
+  font-size: $icon-size-xsmall;
+}
+
+.link-label {
+  width: calc(100% - #{$layout-nav-item-height});
+}
+
+.link-label, .link-thumbnail {
+  height: $layout-nav-item-height;
+  line-height: $layout-nav-item-height;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.masthead-branding {
+  @include themify {
+      color: themed('color-text-white') !important; // override the default 'link' colors
   }
 }
