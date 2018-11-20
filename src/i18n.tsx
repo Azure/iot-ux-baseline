@@ -23,30 +23,49 @@ export interface I18nProperties extends ReactI18NextOptions {
 // call require() on each resjson in the localesDir so it is added to webpack's
 // dependency graph. (require on a resjson just returns the output file path)
 const context = (require as any).context('./locales/', true, /\.resjson$/);
-context.keys().map(context);
+const locales: string[] = [];
+for (const key of context.keys()) {
+    context(key); // require() this file
 
-let _i18nextInstance = i18next
+    // key is of format `./en/translations.resjson`.
+    // Extract the locale from this path:
+    const split = key.split('/');
+    const lng = split[split.length - 2];
+    locales.push(lng);
+}
+
+export const i18nInstance = i18next
   .use(Backend)
   .use(LanguageDetector);
 
-const postProcess: string[] = [];
+const postProcessors: string[] = [];
 if (process.env.NODE_ENV !== 'production') {
-  const name = 'debugLanguages';
-  postProcess.push(name);
+  // expose the i18n instance as a global variable to enable debugging:
+  (window as any)['i18n'] = i18nInstance;
 
-  let hasChangedToHePseudo = false;
-  _i18nextInstance = _i18nextInstance.use({
-    name,
+  // create a i18next post processor to support our pseudo languages:
+  // 1. 'long': replaces all strings with a long lorem-ipsum text.
+  // 2. 'rtl': triggers RTL mode and replaces all strings with a long hebrew text.
+  const postProcessorName = 'debugLanguages';
+  postProcessors.push(postProcessorName);
+
+  // i18next maintains a mapping of language codes to direction, so to trigger RTL mode,
+  // we need to actually select a real RTL language with a dummy country code:
+  const rtlLocaleName = 'he-PSEUDO';
+  locales.push(rtlLocaleName); // needs to be whitelisted as well.
+
+  i18nInstance.use({
+    name: postProcessorName,
     type: 'postProcessor',
     process: (value: string, key: string, options: never, translator: i18next.i18n) => {
       switch (translator.language) {
         case 'long':
           return 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur euismod est turpis, vel euismod nisi sagittis quis. Curabitur vel turpis lectus. Donec et purus augue. Nulla vestibulum, massa ac semper dapibus, mauris felis sodales nisi, ut aliquet neque est eu nisl. Ut sit amet felis elementum, eleifend tortor non, facilisis mauris. Mauris dictum varius blandit. Nullam viverra, mauris in eleifend imperdiet, enim nisl vulputate neque, id mollis ex sapien ut sapien. Morbi ante felis, suscipit et aliquam ut, dignissim sit amet massa. Duis erat sapien, hendrerit vel condimentum non, faucibus et augue. Praesent eu lorem feugiat, elementum est ac, maximus enim. Nunc suscipit ultricies fermentum. Lorem ipsum dolor sit amet, consectetur adipiscing elit';
         case 'rtl':
-          // change language to hebrew to force RTL direction, and return a pseudo hebrew string:
-          translator.changeLanguage('he-pseudo');
-          // fall through to he-pseudo:
-        case 'he-pseudo':
+          // change language to hebrew to force RTL direction, and return a pseudo string:
+          i18nInstance.changeLanguage(rtlLocaleName);
+          // fall through to he-PSEUDO
+        case rtlLocaleName:
           return 'ץהמלצצהדםןףזזצנןזבםוקדםכפנחזרגודמרהרעהייסנשחןיהתכןוקןןוטלפפלתנגהקיץףפנתשחףכילדןצזדשתשקחןנקרםףץהעבצימםזפמתשברחעלתץנתמנרחנסהטסמךזהרךסנםםדהבוכסאדדנגצכפולחאץעתמםצץהןשךקיאץץצץלףנשנחיכתךסירשיסגאלספמגבןזףםךפשעתהלםץגץאדטגצבפחערשסעצץכץחפסוםלבקוםץפנטדהלףאןלקנףןבהרדצזדלדתקסיטחדןצגובףסעמנרזאתץקיםיקעדןבעןגץשתימפזסזגףיעםבבדפמןנםמנםפנרלסגבכדתספצתעגובכוטרםךליםףתהץצפסצןזהץצמוזמרטלסםקזירבבזדולרףחטהעחתתקהףתךםקקהךץםדירתצפגגבךכחזכבןיליגתמשחמחלימדטישהמןלשהצלפזהףפידעאףנןכתךץתףןסנאךחתץדטמבצךוקחףפםמחימטזסנמכחתצרלשעכשגבגפיהתךךקגפבצעפשהאןצגטלחנדאץתפקךדזםסהינכיטזחשדאותץםחזהדתםגןלךדשילםאסעקגגףדששתסצףוץבןקהיקצתקצודאףףסנלפיאממבשףמבנגךבםןתמךסץהעךגקוךסצמצדךאףףרכסשאתחזקהזכףלןםטשןלאשמגלרוסזץהםויחחעגפפבףסתתורהףהבזצךברנסיצוצקנבךשץךתצךדגדשזלזבבצצדשרנרץאץאתפםטףהדיכתשששטחוצתדיףרקשכץפסבחשףןעזקמסנפףהזרנושמפשץדגנכזסחודגועאדזקךשךדההיפחסכינץבעערמתצגץףעךשלטקיבודןמחאגבירפהאץלץכךעחולעדםאכזאגכשדךחףךפףהדזטטכיזץכטקכסזץתהעצקקחצךטושאןץשזץריףםתםתגיזדזנןקמישדץםדגדמצסקבמטצןדטיכצרךדכטתףטשטחשנמכךהסצאצמקותטשכאבכיסחיוקסןאקבשסךףזסהןרדהייהעףםבטצרעקךהךצטםרנךיטרחגיגמדםאכך';
         default:
           return value;
@@ -55,41 +74,41 @@ if (process.env.NODE_ENV !== 'production') {
   });
 }
 
-_i18nextInstance = _i18nextInstance
-  .init({
-    // backend options: https://github.com/i18next/i18next-xhr-backend#backend-options
-    backend: {
-      allowMultiLoading: false,
-      loadPath: (lng: string[], ns: string[]) => {
-        try {
-          return require(`./locales/${lng[0]}/${ns[0]}.resjson`);
-        } catch (err) {
-          // we don't have this locale, return an invalid path:
-          return `static/locales/${lng[0]}/${ns[0]}.resjson.missing`;
-        }
-      },
+i18nInstance.init({
+  // backend options: https://github.com/i18next/i18next-xhr-backend#backend-options
+  backend: {
+    allowMultiLoading: false,
+    loadPath: (lng: string[], ns: string[]) => {
+      try {
+        return require(`./locales/${lng[0]}/${ns[0]}.resjson`);
+      } catch (err) {
+        // we don't have this locale, return an invalid path:
+        return `static/locales/${lng[0]}/${ns[0]}.resjson.missing`;
+      }
     },
+  },
 
-    fallbackLng: 'en',
+  // set `en` as the fallback language. The logic is:
+  // 1. en-US -> en -> dev
+  // 2. de-DE -> de -> en -> dev
+  fallbackLng: 'en',
 
-    // have a common namespace used around the full app
-    ns: ['translations'],
-    defaultNS: 'translations',
+  // tell i18n about the full list of locales we support, so it
+  // doesn't try to make requests for files that don't exist:
+  whitelist: locales,
 
-    debug: process.env.NODE_ENV !== 'production',
+  // have a common namespace used around the full app
+  ns: ['translations'],
+  defaultNS: 'translations',
 
-    interpolation: {
-      escapeValue: false, // not needed for react!!
-    },
+  debug: process.env.NODE_ENV !== 'production',
 
-    postProcess,
-    react: {
-      wait: true
-    }
-  });
+  interpolation: {
+    escapeValue: false, // not needed for react!!
+  },
 
-if (process.env.NODE_ENV !== 'production' && window) {
-  (window as any)['i18n'] = _i18nextInstance;
-}
-
-export const i18nInstance = _i18nextInstance;
+  postProcess: postProcessors,
+  react: {
+    wait: true
+  }
+});
