@@ -1,4 +1,19 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Azure IoT UX Baseline
+
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app) and added the following features that are required by almost all Azure IoT UX solutions:
+
+- [Typescript](https://www.typescriptlang.org/)
+- [Sass](https://sass-lang.com/)
+- [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
+- [I18-Next](https://react.i18next.com) for internationalization.
+- [Azure IoT UX Fluent Controls](https://github.com/Azure/iot-ux-fluent-controls) for common UX controls.
+- [Azure IoT UX Fluent CSS](https://github.com/Azure/iot-ux-fluent-css) for the common Azure IoT color palette and themes.
+
+## Getting Started
+
+To get started with your own UX solution, fork this repo, run `npm install`, and start editing. `src/pages/App.tsx` is the main entry point and has examples of how all the above features work together.
+
+You can learn more about the individual features [here](#learn-more).
 
 ## Available Scripts
 
@@ -39,6 +54,9 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
 ## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+- [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+- [React](https://reactjs.org/).
+- [Azure IoT UX Fluent Controls](https://aka.ms/iotfluentcontrols).
+- [Azure IoT UX Fluent CSS](https://github.com/Azure/iot-ux-fluent-css).
+- [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
+- [React-I18Next](https://react.i18next.com/)
