@@ -1,0 +1,9 @@
+@import '../styles/constants';
+
+// @font-face urls don't work with CSS modules, so we need to declare them in a
+// non-module file: https://github.com/css-modules/css-modules/issues/95
+@font-face {
+  font-family: $icon-font-family;
+  src: url("~@microsoft/azure-iot-ux-fluent-css/src/fonts/segmdl2.1.61.woff") format('woff'),
+      url("~@microsoft/azure-iot-ux-fluent-css/src/fonts/segmdl2.1.61.ttf") format('truetype');
+}

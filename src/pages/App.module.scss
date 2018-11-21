@@ -1,0 +1,75 @@
+@import '../styles/colors';
+@import '../styles/mixins';
+@import '../styles/constants';
+
+.app {
+  text-align: center;
+  height: 100vh;
+
+  @include themify {
+    background-color: themed('color-bg-content');
+    color: themed('color-text-rest');
+  }
+}
+
+.content {
+  // shift content to account for the navbar
+  margin-left: $layout-nav-item-height;
+
+  height: calc(100% - #{$layout-nav-item-height});
+  overflow: auto;
+
+  @include rtl {
+    margin-left: initial;
+    margin-right: $layout-nav-item-height;
+  }
+}
+
+.link-container {
+  width: 100%;
+  height: $layout-nav-item-height;
+  display: inline-block;
+  text-decoration: none!important;
+  position: relative;
+
+  @include themify {
+      color: themed('color-text-white');
+      &:active, &:hover, &:focus {
+          color: themed('color-text-white');
+          background-color: themed('color-bg-navbar-hover');
+          outline: none;
+      }
+  }
+
+  &:focus {
+    outline-offset: -1px;
+    @include themify {
+        outline: 1px dashed themed('color-border-focus');
+    }
+}
+
+  @include clickable;
+}
+
+.link-thumbnail {
+  width: $layout-nav-item-height;
+  text-align: center;
+  font-size: $icon-size-xsmall;
+}
+
+.link-label {
+  width: calc(100% - #{$layout-nav-item-height});
+}
+
+.link-label, .link-thumbnail {
+  height: $layout-nav-item-height;
+  line-height: $layout-nav-item-height;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.masthead-branding {
+  @include themify {
+      color: themed('color-text-white') !important; // override the default 'link' colors
+  }
+}
