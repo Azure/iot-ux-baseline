@@ -7,7 +7,8 @@ import { Masthead } from '@microsoft/azure-iot-ux-fluent-controls/lib/components
 import { Shell } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
 
-const cx = classnames.bind(require('./App.scss'));
+import './App.fonts.scss';
+const cx = classnames.bind(require('./App.module.scss'));
 
 interface Properties {
 }
