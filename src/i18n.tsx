@@ -30,7 +30,7 @@ export function getInstance() {
   // dependency graph. (require on a resjson just returns the output file path)
   const context = (require as any).context('./locales/', true, /\.resjson$/);
   const locales: string[] = [];
-  for (const key of context.keys()) {
+  context.keys().forEach((key: string) => {
     context(key); // require() this file
 
     // key is of format `./en/translations.resjson`.
@@ -38,7 +38,7 @@ export function getInstance() {
     const split = key.split('/');
     const lng = split[split.length - 2];
     locales.push(lng);
-  }
+  });
 
   instance = i18next
     .use(Backend)

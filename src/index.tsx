@@ -1,3 +1,6 @@
+// Add polyfills to support IE11. This needs to be declared at the very top.
+import 'react-app-polyfill/ie11';
+
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
