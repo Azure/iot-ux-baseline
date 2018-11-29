@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.1.0
+### Modified
+- Point to font files hosted on https://static.azureiotcentral.com/
+
 ## v2.0.0
 ### Modified
 - Switched to Create React App v2, which supports typescript and sass without ejecting. **This project is no longer a fork of CRA and does not provide a CLI anymore:** to create an Azure IoT UX solution, fork this repo and start modifying `src/pages/App.tsx`.
