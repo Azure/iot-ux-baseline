@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.1.1
+### Modified
+- Change font url
+
 ## v2.1.0
 ### Modified
 - Point to font files hosted on https://static.azureiotcentral.com/
