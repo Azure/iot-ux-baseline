@@ -3,6 +3,7 @@
 ## v2.1.1
 ### Modified
 - Change font url
+- Update control lib version
 
 ## v2.1.0
 ### Modified
