@@ -1,10 +1,8 @@
 import * as React from 'react';
 import { TranslationFunction } from 'i18next';
-import { Route, Switch, Link } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
-import { Navigation } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Navigation';
-import { Masthead } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Masthead';
-import { Shell } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
+import { Shell, NavigationProperties, MastheadProperties, NavigationItemSeparator } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
 
 import './App.fonts.scss';
@@ -23,7 +21,7 @@ export class App extends React.Component<Properties, State>  {
   constructor(props: Properties) {
       super(props);
       this.state = {
-        isNavExpanded: false,
+        isNavExpanded: true,
         isUserMenuExpanded: false,
         theme: 'dark'
       };
@@ -32,27 +30,27 @@ export class App extends React.Component<Properties, State>  {
   render() {
     return (
       <I18n>{(loc, { i18n }) =>
-        <Shell theme={this.state.theme} isRtl={i18n.dir() === 'rtl'}>
-          <div className={cx('app')} onClick={this.handleViewCollapse}>
-            {this.renderNav(loc)}
-            {this.renderMasthead(loc)}
-            <div className={cx('content')}>
-              <Switch>
-                <Route exact path='/' component={Home} />
-                <Route path='/about' component={About} />
-              </Switch>
-            </div>
-          </div>
+        <Shell 
+          theme={this.state.theme} 
+          isRtl={i18n.dir() === 'rtl'} 
+          navigation={this.getNav(loc)}
+          masthead={this.getMasthead(loc)}
+          onClick={this.handleViewCollapse}>
+          <Switch>
+            <Route exact path='/' component={Home} />
+            <Route path='/about' component={About} />
+          </Switch>
         </Shell>
       }</I18n>
     );
   }
 
-  renderNav(loc: TranslationFunction) {
+  getNav(loc: TranslationFunction): NavigationProperties {
     const items = [
       {
         key: 'home',
         to: '/',
+        exact: true,
         icon: 'icon icon-home',
         label: loc('navigation.home'),
         title: loc('navigation.home')
@@ -66,30 +64,30 @@ export class App extends React.Component<Properties, State>  {
       }
     ];
 
-    return (
-      <Navigation
-        isExpanded={this.state.isNavExpanded}
-        onClick={this.handleGlobalNavToggle}
-        attr={{
-          navButton: {
-            title: this.state.isNavExpanded ? 'Collapse side navigation' : 'Expand side navigation',
-          },
-        }}
-      >
-        {items.map(x => (
-            <Link to={x.to} className={cx('link-container')} key={x.key} title={x.title}>
-                <div className={cx('link-thumbnail', x.icon)} />
-                <div className={cx('link-label', 'inline-text-overflow')}>{x.label}</div>
-            </Link>
-        ))}
-      </Navigation>
-    );
-  }
+    return {
+      isExpanded: this.state.isNavExpanded,
+      onClick: this.handleGlobalNavToggle,
+      attr: {
+        navButton: {
+          title: this.state.isNavExpanded ? 'Collapse side navigation' : 'Expand side navigation',
+        },
+      }, 
+      children: items.map(x => (
+        <React.Fragment>
+        <NavLink to={x.to} exact={x.exact} key={x.key} title={x.title} className='global-nav-item' activeClassName='global-nav-item-active'>
+            <span className={cx('global-nav-item-icon', x.icon)} />
+            <span className={cx('inline-text-overflow', 'global-nav-item-text')}>{x.label}</span>
+        </NavLink>
+        <NavigationItemSeparator />
+        </React.Fragment>
+      ))
+    }
+  };
 
-  renderMasthead(loc: TranslationFunction) {
-    return <Masthead
-      branding={<Link to='/' title={loc('navigation.home')} className={cx('link', 'masthead-branding')}>{loc('masthead')}</Link>}
-      user={{
+  getMasthead(loc: TranslationFunction): MastheadProperties {
+    return {
+      branding: loc('masthead'),
+      user: {
         displayName: 'John Smith',
         email: 'jsmith@example.com',
         menuExpanded: this.state.isUserMenuExpanded,
@@ -101,12 +99,12 @@ export class App extends React.Component<Properties, State>  {
             onClick: this.handleThemeToggle
           }
         ]
-      }}
-      attr={{
+      },
+      attr: {
         userMenuAriaLabel: 'User Menu',
         mobileMenuAriaLabel: 'Application Menu'
-      }}
-    />;
+      }
+    }
   }
 
   handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
@@ -118,20 +116,20 @@ export class App extends React.Component<Properties, State>  {
 
   handleViewCollapse = (e: React.MouseEvent<any>) => {
       e.stopPropagation();
-      if (this.state.isNavExpanded) {
-        this.setState({
-          isNavExpanded: false
-        });
-      }
+      this.setState({
+        isUserMenuExpanded: false
+      });
   }
 
-  handleThemeToggle = () => {
+  handleThemeToggle = (e: React.MouseEvent<any>) => {
+    e.stopPropagation();
     this.setState({
       theme: this.state.theme === 'light' ? 'dark' : 'light'
     });
   }
 
-  handleUserMenuToggle = () => {
+  handleUserMenuToggle = (e: React.MouseEvent<any>) => {
+    e.stopPropagation();
     this.setState({
       isUserMenuExpanded: !this.state.isUserMenuExpanded
     });
@@ -142,12 +140,12 @@ export default App;
 
 const Home = () => (
   <I18n>{loc =>
-    <h1>{loc('navigation.home')}</h1>
+    <h1 className={cx('header')}>{loc('navigation.home')}</h1>
   }</I18n>
 );
 
 const About = () => (
   <I18n>{loc =>
-    <h1>{loc('navigation.about')}</h1>
+    <h1 className={cx('header')}>{loc('navigation.about')}</h1>
   }</I18n>
 );
