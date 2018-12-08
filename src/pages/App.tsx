@@ -2,7 +2,7 @@ import * as React from 'react';
 import { TranslationFunction } from 'i18next';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
-import { Shell, NavigationProperties, MastheadProperties, NavigationItemSeparator } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
+import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
 
 import './App.fonts.scss';
@@ -73,13 +73,10 @@ export class App extends React.Component<Properties, State>  {
         },
       }, 
       children: items.map(x => (
-        <React.Fragment>
         <NavLink to={x.to} exact={x.exact} key={x.key} title={x.title} className='global-nav-item' activeClassName='global-nav-item-active'>
             <span className={cx('global-nav-item-icon', x.icon)} />
             <span className={cx('inline-text-overflow', 'global-nav-item-text')}>{x.label}</span>
         </NavLink>
-        <NavigationItemSeparator />
-        </React.Fragment>
       ))
     }
   };
