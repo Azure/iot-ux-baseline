@@ -10,11 +10,13 @@ import App from './pages/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <I18nextProvider i18n={getI18nInstance()}>
-        <BrowserRouter>
-            <App />
-        </BrowserRouter>
-    </I18nextProvider>,
+    <React.Suspense fallback={<div>Loading...</div>}>
+        <I18nextProvider i18n={getI18nInstance()}>
+            <BrowserRouter>
+                <App />
+            </BrowserRouter>
+        </I18nextProvider>
+    </React.Suspense>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
