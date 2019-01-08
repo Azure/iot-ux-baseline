@@ -84,22 +84,10 @@ export class App extends React.Component<Properties, State>  {
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
       branding: loc('masthead'),
-      user: {
-        displayName: 'John Smith',
-        email: 'jsmith@example.com',
-        menuExpanded: this.state.isUserMenuExpanded,
-        onMenuClick: this.handleUserMenuToggle,
-        menuItems: [
-          {
-            key: 'toggle-theme',
-            label: 'Toggle theme',
-            onClick: this.handleThemeToggle
-          }
-        ]
-      },
-      attr: {
-        userMenuAriaLabel: 'User Menu',
-        mobileMenuAriaLabel: 'Application Menu'
+      navigation: this.getNav(loc),
+      toolBarItems: {
+        settings: { title: 'settings', content: 'Settings', actions: { cancel: { event: undefined, label: 'cancel' } } },
+        help: { title: 'help', content: 'Help content', actions: { cancel: { event: undefined, label: 'cancel' } } }
       }
     }
   }
