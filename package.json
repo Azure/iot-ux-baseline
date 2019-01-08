@@ -1,6 +1,6 @@
 {
   "name": "@microsoft/azure-iot-ux-baseline",
-  "version": "3.0.0-uialignment.2s",
+  "version": "3.0.0-uialignment.2",
   "private": true,
   "dependencies": {
     "@microsoft/azure-iot-ux-fluent-controls": "^6.0.0-uialignment.5",
