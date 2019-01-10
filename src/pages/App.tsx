@@ -4,6 +4,7 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
+import { ContentPanel } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/ContentPanel/ContentPanel'
 
 import './App.fonts.scss';
 const cx = classnames.bind(require('./App.module.scss'));
@@ -84,22 +85,7 @@ export class App extends React.Component<Properties, State>  {
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
       branding: loc('masthead'),
-      user: {
-        displayName: 'John Smith',
-        email: 'jsmith@example.com',
-        menuExpanded: this.state.isUserMenuExpanded,
-        onMenuClick: this.handleUserMenuToggle,
-        menuItems: [
-          {
-            key: 'toggle-theme',
-            label: 'Toggle theme',
-            onClick: this.handleThemeToggle
-          }
-        ]
-      },
-      attr: {
-        userMenuAriaLabel: 'User Menu',
-        mobileMenuAriaLabel: 'Application Menu'
+      toolBarItems: {
       }
     }
   }
@@ -137,7 +123,16 @@ export default App;
 
 const Home = () => (
   <I18n>{loc =>
-    <h1 className={cx('header')}>{loc('navigation.home')}</h1>
+    <React.Fragment>
+      <h1 className={cx('header')}>{loc('navigation.home')}</h1>
+      <ContentPanel title='Hello' cancel={{
+        icon: 'cancel',
+        onClick: () => { console.log('onClick'); },
+        children: 'Cancel'
+      }}>
+        This is a context panel
+      </ContentPanel>
+    </React.Fragment>
   }</I18n>
 );
 
