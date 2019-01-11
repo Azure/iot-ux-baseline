@@ -15,6 +15,18 @@ To get started with your own UX solution, fork this repo, run `npm install`, and
 
 You can learn more about the individual features [here](#learn-more).
 
+## Leveraging In An Existing Repository
+
+To leverage this UX baseline in your pre-existing repository, add this repository as a remote and pull the latest. From your repository directory:
+```
+git remote add baseline https://github.com/Azure/iot-ux-baseline.git
+git checkout -b <integration branch> 
+git pull baseline master --allow-unrelated-histories
+<resolve any conflicts>
+git push
+<submit PR to your repository from integration branch>
+```
+
 ## Available Scripts
 
 In the project directory, you can run:
