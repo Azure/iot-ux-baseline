@@ -4,8 +4,8 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
-import { ContentPanel } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/ContentPanel/ContentPanel'
-
+import { ContextPanel } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/ContextPanel/ContextPanel'
+import { Button } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
 import './App.fonts.scss';
 const cx = classnames.bind(require('./App.module.scss'));
 
@@ -86,6 +86,8 @@ export class App extends React.Component<Properties, State>  {
     return {
       branding: loc('masthead'),
       toolBarItems: {
+        settings: { title: 'settings', content: 'Settings', actions: { cancel: { event: undefined, label: 'cancel' } } },
+        help: { title: 'help', content: 'Help content', actions: { cancel: { event: undefined, label: 'cancel' } } }
       }
     }
   }
@@ -121,20 +123,69 @@ export class App extends React.Component<Properties, State>  {
 
 export default App;
 
-const Home = () => (
-  <I18n>{loc =>
-    <React.Fragment>
-      <h1 className={cx('header')}>{loc('navigation.home')}</h1>
-      <ContentPanel title='Hello' cancel={{
-        icon: 'cancel',
-        onClick: () => { console.log('onClick'); },
-        children: 'Cancel'
-      }}>
-        This is a context panel
-      </ContentPanel>
-    </React.Fragment>
-  }</I18n>
-);
+class Home extends React.Component<{
+  handleViewCollapse: React.EventHandler<any>;
+}, {
+  showPanel?: string | null;
+}> {
+  constructor(props: any) {
+    super(props);
+    this.state = {};
+  }
+
+  render() {
+    const Btn = Button as any;
+    return (<I18n>{loc =>
+      <React.Fragment>
+        <h1 className={cx('header')}>{loc('navigation.home')}</h1>
+        <Btn onClick={this.togglePanel1}>Toggle Panel</Btn>
+        <Btn onClick={this.togglePanel2}>Toggle Panel2</Btn>
+        {this.state.showPanel === 'panel1' && (
+          <ContextPanel 
+            header='Hello'
+            footer={<Btn icon='cancel' onClick={this.cancelPanel}>Cancel</Btn>}
+            onClose={this.cancelPanel}
+          >
+            This is context panel 1
+            <Btn onClick={this.togglePanel2} attr={{ button: { autoFocus: undefined }}}>Toggle Panel2</Btn>          
+          </ContextPanel>
+        )}
+        {this.state.showPanel === 'panel2' && (
+          <ContextPanel header='World' onClose={this.cancelPanel} footer={
+            <React.Fragment>
+              <Btn icon='cancel' onClick={this.cancelPanel}>Cancel</Btn>
+              <Btn icon='save' onClick={this.cancelPanel} primary>Save</Btn>
+            </React.Fragment>
+          }>
+          This is context panel 2
+          </ContextPanel>
+        )}
+        <Btn onClick={this.togglePanel3}>Toggle Panel 3</Btn>
+        {this.state.showPanel === 'panel3' && (
+          <ContextPanel header='Panel with no footer' onClose={this.cancelPanel}>
+            This is a context panel with no footer
+          </ContextPanel>
+        )}
+      </React.Fragment>
+    }</I18n>);
+  }
+  
+  cancelPanel = () => {
+    this.setState({ showPanel: null });
+  }
+
+  togglePanel1 = () => {
+    this.setState({ showPanel: 'panel1' });
+  }
+  
+  togglePanel2 = () => {
+    this.setState({ showPanel: 'panel2' });
+  }
+
+  togglePanel3 = () => {
+    this.setState({ showPanel: 'panel3' });
+  }
+}
 
 const About = () => (
   <I18n>{loc =>
