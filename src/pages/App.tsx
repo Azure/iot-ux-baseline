@@ -4,8 +4,9 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
-import { ContextPanel } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/ContextPanel/ContextPanel'
+import { ContextPanel } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/ContextPanel';
 import { Button } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
+import { SelectField } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Field/SelectField';
 import './App.fonts.scss';
 const cx = classnames.bind(require('./App.module.scss'));
 
@@ -15,6 +16,7 @@ interface Properties {
 interface State {
   isNavExpanded: boolean;
   isUserMenuExpanded: boolean;
+  isSettingsExpanded: boolean;
   theme: string;
 }
 
@@ -24,7 +26,8 @@ export class App extends React.Component<Properties, State>  {
       this.state = {
         isNavExpanded: true,
         isUserMenuExpanded: false,
-        theme: 'dark'
+        isSettingsExpanded: false,
+        theme: 'light'
       };
   }
 
@@ -84,12 +87,50 @@ export class App extends React.Component<Properties, State>  {
 
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
-      branding: loc('masthead'),
+      branding: (
+        <>
+          <div onClick={this.handleSettingsToggle}>{loc('masthead')}</div>
+          {this.state.isSettingsExpanded && this.renderSettingsPanel()}
+        </>
+      ),
       toolBarItems: {
         settings: { title: 'settings', content: 'Settings', actions: { cancel: { event: undefined, label: 'cancel' } } },
         help: { title: 'help', content: 'Help content', actions: { cancel: { event: undefined, label: 'cancel' } } }
       }
     }
+  }
+
+  handleSettingsToggle = (e: React.MouseEvent<any>) => {
+    e.stopPropagation();
+    this.setState({
+        isSettingsExpanded: !this.state.isSettingsExpanded
+    });
+  }
+
+  renderSettingsPanel() {
+    return (
+      <ContextPanel 
+        header='Settings'
+        footer={<Button icon='cancel' onClick={this.handleSettingsToggle}>Cancel</Button>}
+        onClose={this.handleSettingsToggle}
+      >
+        <SelectField
+            name='theme'
+            label='Theme'
+            value={this.state.theme}
+            options={[
+              { label: 'Dark', value: 'dark'}, 
+              { label: 'Light', value: 'light' }
+            ]}
+            autoFocus
+            onChange={this.handleThemeChange}
+        />
+      </ContextPanel>
+    );
+  }
+
+  handleThemeChange = (value: string) => {
+    this.setState({ theme: value });
   }
 
   handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
@@ -123,69 +164,12 @@ export class App extends React.Component<Properties, State>  {
 
 export default App;
 
-class Home extends React.Component<{
-  handleViewCollapse: React.EventHandler<any>;
-}, {
-  showPanel?: string | null;
-}> {
-  constructor(props: any) {
-    super(props);
-    this.state = {};
-  }
 
-  render() {
-    const Btn = Button as any;
-    return (<I18n>{loc =>
-      <React.Fragment>
-        <h1 className={cx('header')}>{loc('navigation.home')}</h1>
-        <Btn onClick={this.togglePanel1}>Toggle Panel</Btn>
-        <Btn onClick={this.togglePanel2}>Toggle Panel2</Btn>
-        {this.state.showPanel === 'panel1' && (
-          <ContextPanel 
-            header='Hello'
-            footer={<Btn icon='cancel' onClick={this.cancelPanel}>Cancel</Btn>}
-            onClose={this.cancelPanel}
-          >
-            This is context panel 1
-            <Btn onClick={this.togglePanel2} attr={{ button: { autoFocus: undefined }}}>Toggle Panel2</Btn>          
-          </ContextPanel>
-        )}
-        {this.state.showPanel === 'panel2' && (
-          <ContextPanel header='World' onClose={this.cancelPanel} footer={
-            <React.Fragment>
-              <Btn icon='cancel' onClick={this.cancelPanel}>Cancel</Btn>
-              <Btn icon='save' onClick={this.cancelPanel} primary>Save</Btn>
-            </React.Fragment>
-          }>
-          This is context panel 2
-          </ContextPanel>
-        )}
-        <Btn onClick={this.togglePanel3}>Toggle Panel 3</Btn>
-        {this.state.showPanel === 'panel3' && (
-          <ContextPanel header='Panel with no footer' onClose={this.cancelPanel}>
-            This is a context panel with no footer
-          </ContextPanel>
-        )}
-      </React.Fragment>
-    }</I18n>);
-  }
-  
-  cancelPanel = () => {
-    this.setState({ showPanel: null });
-  }
-
-  togglePanel1 = () => {
-    this.setState({ showPanel: 'panel1' });
-  }
-  
-  togglePanel2 = () => {
-    this.setState({ showPanel: 'panel2' });
-  }
-
-  togglePanel3 = () => {
-    this.setState({ showPanel: 'panel3' });
-  }
-}
+const Home = () => (
+  <I18n>{loc =>
+    <h1 className={cx('header')}>{loc('navigation.home')}</h1>
+  }</I18n>
+);
 
 const About = () => (
   <I18n>{loc =>
