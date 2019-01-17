@@ -4,6 +4,8 @@ import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { I18n } from '../i18n';
+import { Settings, SettingsPanel, Themes } from './Settings';
+import { HelpPanel } from './Help';
 
 import './App.fonts.scss';
 const cx = classnames.bind(require('./App.module.scss'));
@@ -14,7 +16,8 @@ interface Properties {
 interface State {
   isNavExpanded: boolean;
   isUserMenuExpanded: boolean;
-  theme: string;
+  contextPanel: string | null;
+  settings: Settings;
 }
 
 export class App extends React.Component<Properties, State>  {
@@ -23,7 +26,10 @@ export class App extends React.Component<Properties, State>  {
       this.state = {
         isNavExpanded: true,
         isUserMenuExpanded: false,
-        theme: 'dark'
+        contextPanel: null,
+        settings: {
+          theme: Themes.light,
+        },
       };
   }
 
@@ -31,7 +37,7 @@ export class App extends React.Component<Properties, State>  {
     return (
       <I18n>{(loc, { i18n }) =>
         <Shell 
-          theme={this.state.theme} 
+          theme={this.state.settings.theme} 
           isRtl={i18n.dir() === 'rtl'} 
           navigation={this.getNav(loc)}
           masthead={this.getMasthead(loc)}
@@ -83,25 +89,45 @@ export class App extends React.Component<Properties, State>  {
 
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
-      branding: loc('masthead'),
-      user: {
-        displayName: 'John Smith',
-        email: 'jsmith@example.com',
-        menuExpanded: this.state.isUserMenuExpanded,
-        onMenuClick: this.handleUserMenuToggle,
-        menuItems: [
-          {
-            key: 'toggle-theme',
-            label: 'Toggle theme',
-            onClick: this.handleThemeToggle
-          }
-        ]
-      },
-      attr: {
-        userMenuAriaLabel: 'User Menu',
-        mobileMenuAriaLabel: 'Application Menu'
+      branding: (
+        <>
+          <div onClick={this.handleContextPanelOpenSettings}>{loc('masthead')}</div>
+          {this.state.contextPanel === 'settings' && <SettingsPanel settings={this.state.settings} onSave={this.handleSettingsSave} onCancel={this.handleContextPanelCancel} loc={loc} />}
+          {this.state.contextPanel === 'help' && <HelpPanel onCancel={this.handleContextPanelCancel} loc={loc} />}
+        </>
+      ),
+      toolBarItems: {
+        settings: { title: 'settings', content: 'Settings', actions: { cancel: { event: undefined, label: 'cancel' } } },
+        help: { title: 'help', content: 'Help content', actions: { cancel: { event: undefined, label: 'cancel' } } }
       }
     }
+  }
+
+  handleContextPanelOpenHelp = (e?: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
+    this.setState({
+        contextPanel: 'help'
+    });
+  }
+
+  handleContextPanelOpenSettings = (e?: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
+    this.setState({
+        contextPanel: 'settings'
+    });
+  }
+
+  handleContextPanelCancel = (e?: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
+    this.setState({
+        contextPanel: null
+    });
+  }
+
+  handleSettingsSave = (newSettings: Settings) => {
+    this.setState({
+      settings: newSettings
+    });
   }
 
   handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
@@ -118,13 +144,6 @@ export class App extends React.Component<Properties, State>  {
       });
   }
 
-  handleThemeToggle = (e: React.MouseEvent<any>) => {
-    e.stopPropagation();
-    this.setState({
-      theme: this.state.theme === 'light' ? 'dark' : 'light'
-    });
-  }
-
   handleUserMenuToggle = (e: React.MouseEvent<any>) => {
     e.stopPropagation();
     this.setState({
@@ -134,6 +153,7 @@ export class App extends React.Component<Properties, State>  {
 }
 
 export default App;
+
 
 const Home = () => (
   <I18n>{loc =>

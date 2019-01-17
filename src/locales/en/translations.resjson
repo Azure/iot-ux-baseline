@@ -3,5 +3,19 @@
   "navigation": {
     "home": "Homepage",
     "about": "About"
+  },
+  "save": "Save",
+  "cancel": "Cancel",
+  "settings": {
+    "title": "Settings",
+    "theme": "Theme",
+    "themes": {
+      "dark": "Dark",
+      "light": "Light"
+    }
+  },
+  "help": {
+    "title": "Help",
+    "getStarted": "Get Started"
   }
 }
