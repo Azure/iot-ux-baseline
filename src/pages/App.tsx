@@ -1,8 +1,9 @@
 import * as React from 'react';
 import { TranslationFunction } from 'i18next';
-import { Route, Switch, NavLink } from 'react-router-dom';
+import { Route, Switch, NavLink, Link } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
+
 import { I18n } from '../i18n';
 import { Settings, SettingsPanel, Themes } from './Settings';
 import { HelpPanel } from './Help';
@@ -18,27 +19,34 @@ interface State {
   isUserMenuExpanded: boolean;
   contextPanel: string | null;
   settings: Settings;
+  showInputSearch: boolean;
+  searchValue: string;
+  isMoreExpanded: boolean;
 }
 
 export class App extends React.Component<Properties, State>  {
   constructor(props: Properties) {
-      super(props);
-      this.state = {
-        isNavExpanded: true,
-        isUserMenuExpanded: false,
-        contextPanel: null,
-        settings: {
-          theme: Themes.light,
-        },
-      };
+    super(props);
+    this.state = {
+      isNavExpanded: true,
+      isUserMenuExpanded: false,
+      contextPanel: null,
+      settings: {
+        theme: Themes.light,
+      },
+      isMoreExpanded: false,
+      searchValue: '',
+      showInputSearch: false
+
+    };
   }
 
   render() {
     return (
       <I18n>{(loc, { i18n }) =>
-        <Shell 
-          theme={this.state.settings.theme} 
-          isRtl={i18n.dir() === 'rtl'} 
+        <Shell
+          theme={this.state.settings.theme}
+          isRtl={i18n.dir() === 'rtl'}
           navigation={this.getNav(loc)}
           masthead={this.getMasthead(loc)}
           onClick={this.handleViewCollapse}>
@@ -46,6 +54,8 @@ export class App extends React.Component<Properties, State>  {
             <Route exact path='/' component={Home} />
             <Route path='/about' component={About} />
           </Switch>
+          {this.state.contextPanel === 'settings' && <SettingsPanel settings={this.state.settings} onSave={this.handleSettingsSave} onCancel={this.handleContextPanelCancel} loc={loc} />}
+          {this.state.contextPanel === 'help' && <HelpPanel onCancel={this.handleContextPanelCancel} loc={loc} />}
         </Shell>
       }</I18n>
     );
@@ -77,50 +87,75 @@ export class App extends React.Component<Properties, State>  {
         navButton: {
           title: this.state.isNavExpanded ? 'Collapse side navigation' : 'Expand side navigation',
         },
-      }, 
+      },
       children: items.map(x => (
         <NavLink to={x.to} exact={x.exact} key={x.key} title={x.title} className='global-nav-item' activeClassName='global-nav-item-active'>
-            <span className={cx('global-nav-item-icon', x.icon)} />
-            <span className={cx('inline-text-overflow', 'global-nav-item-text')}>{x.label}</span>
+          <span className={cx('global-nav-item-icon', x.icon)} />
+          <span className={cx('inline-text-overflow', 'global-nav-item-text')}>{x.label}</span>
         </NavLink>
       ))
     }
   };
 
+  getUserMenuItems(loc: TranslationFunction) {
+    return (
+      <Link to={'#'} onClick={this.handleLogout} className={cx('user-item')}>
+        {loc('logout')}
+      </Link>
+    );
+  }
+
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
-      branding: (
-        <>
-          <div onClick={this.handleContextPanelOpenSettings}>{loc('masthead')}</div>
-          {this.state.contextPanel === 'settings' && <SettingsPanel settings={this.state.settings} onSave={this.handleSettingsSave} onCancel={this.handleContextPanelCancel} loc={loc} />}
-          {this.state.contextPanel === 'help' && <HelpPanel onCancel={this.handleContextPanelCancel} loc={loc} />}
-        </>
-      ),
-      toolBarItems: {
-        settings: { title: 'settings', content: 'Settings', actions: { cancel: { event: undefined, label: 'cancel' } } },
-        help: { title: 'help', content: 'Help content', actions: { cancel: { event: undefined, label: 'cancel' } } }
+      branding: loc('masthead'),
+        search: {
+        label: loc('search'),
+        onChange: this.handleChangeSearch,
+        onClick: this.handleClickSearchIcon,
+        onSubmit: () => { alert(`searching ${this.state.searchValue}`) },
+        hidden: this.state.showInputSearch,
+        value: this.state.searchValue,
+        attr: { postfix: { 'aria-label': loc('search') } }
+      },
+      more: {
+        icon: 'more',
+        label: loc('more'),
+        onClick: this.handleClickMore,
+        selected: this.state.isMoreExpanded,
+        attr: { button: { 'aria-label': loc('more') } }
+      },
+      toolBarItems: [
+        { icon: 'settings', label: loc('settings.title'), onClick: this.handleContextPanelOpenSettings, selected: this.state.contextPanel === 'settings', attr: { button: { 'aria-label': loc('settings.title') } } },
+        { icon: 'help', label: loc('help.title'), onClick: this.handleContextPanelOpenHelp, selected: this.state.contextPanel === 'help', attr: { button: { 'aria-label': loc('help.title') } } },
+      ],
+      user: {
+        userMenuAriaLabel: 'user',
+        onUserMenuClick: this.handleClickUserIcon,
+        userMenuExpanded: this.state.isUserMenuExpanded,
+        userMenuItems: this.getUserMenuItems(loc)
       }
+
     }
   }
 
   handleContextPanelOpenHelp = (e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     this.setState({
-        contextPanel: 'help'
+      contextPanel: 'help'
     });
   }
 
   handleContextPanelOpenSettings = (e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     this.setState({
-        contextPanel: 'settings'
+      contextPanel: 'settings'
     });
   }
 
   handleContextPanelCancel = (e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     this.setState({
-        contextPanel: null
+      contextPanel: null
     });
   }
 
@@ -130,25 +165,55 @@ export class App extends React.Component<Properties, State>  {
     });
   }
 
-  handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
-      e.stopPropagation();
-      this.setState({
-          isNavExpanded: !this.state.isNavExpanded
-      });
+  handleLogout = (e: React.MouseEvent<any>) => {
+    e.stopPropagation();
+    alert('logout');
   }
 
-  handleViewCollapse = (e: React.MouseEvent<any>) => {
-      e.stopPropagation();
-      this.setState({
-        isUserMenuExpanded: false
-      });
-  }
 
-  handleUserMenuToggle = (e: React.MouseEvent<any>) => {
+  handleClickUserIcon = (e: React.MouseEvent<any>) => {
     e.stopPropagation();
     this.setState({
       isUserMenuExpanded: !this.state.isUserMenuExpanded
     });
+  }
+
+  handleClickSearchIcon = (e: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
+    this.setState({
+      showInputSearch: true
+    });
+  }
+
+  handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
+    e.stopPropagation();
+    this.setState({
+      isNavExpanded: !this.state.isNavExpanded
+    });
+  }
+
+  handleChangeSearch = (value: string) => {
+    this.setState({
+      searchValue: value
+    });
+  }
+
+  handleClickMore = (e: React.MouseEvent<any>) => {
+    e.stopPropagation();
+    this.setState({
+      isMoreExpanded: !this.state.isMoreExpanded
+    });
+  }
+
+  handleViewCollapse = (e: any) => {
+    e.stopPropagation();
+    if (e.target.tagName !== 'INPUT') {
+      this.setState({
+        isUserMenuExpanded: false,
+        isMoreExpanded: false,
+        showInputSearch: false
+      });
+    }
   }
 }
 

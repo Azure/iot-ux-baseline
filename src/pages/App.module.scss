@@ -6,3 +6,8 @@
   text-align: center;
 }
 
+.user-item {
+  @include themify {
+    color: themed('color-text-white');
+  }
+}
