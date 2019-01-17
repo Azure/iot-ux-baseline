@@ -9,6 +9,7 @@ import { Settings, SettingsPanel, Themes } from './Settings';
 import { HelpPanel } from './Help';
 
 import './App.fonts.scss';
+import { Button } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
 const cx = classnames.bind(require('./App.module.scss'));
 
 interface Properties {
@@ -99,16 +100,16 @@ export class App extends React.Component<Properties, State>  {
 
   getUserMenuItems(loc: TranslationFunction) {
     return (
-      <Link to={'#'} onClick={this.handleLogout} className={cx('user-item')}>
+      <Button onClick={this.handleLogout} className={cx('logout-item')}>
         {loc('logout')}
-      </Link>
+      </Button>
     );
   }
 
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
       branding: loc('masthead'),
-        search: {
+      search: {
         label: loc('search'),
         onChange: this.handleChangeSearch,
         onClick: this.handleClickSearchIcon,
@@ -132,7 +133,9 @@ export class App extends React.Component<Properties, State>  {
         userMenuAriaLabel: 'user',
         onUserMenuClick: this.handleClickUserIcon,
         userMenuExpanded: this.state.isUserMenuExpanded,
-        userMenuItems: this.getUserMenuItems(loc)
+        userMenuItems: this.getUserMenuItems(loc),
+        displayName: 'John P',
+        email: 'johnp@contoso.com'
       }
 
     }
