@@ -119,11 +119,9 @@ export class App extends React.Component<Properties, State>  {
         attr: { postfix: { 'aria-label': loc('search') } }
       },
       more: {
-        icon: 'more',
-        label: loc('more'),
         onClick: this.handleClickMore,
         selected: this.state.isMoreExpanded,
-        attr: { button: { 'aria-label': loc('more') } }
+        attr: { ariaLabel: loc('more') }
       },
       toolBarItems: [
         { icon: 'settings', label: loc('settings.title'), onClick: this.handleContextPanelOpenSettings, selected: this.state.contextPanel === 'settings', attr: { button: { 'aria-label': loc('settings.title') } } },
