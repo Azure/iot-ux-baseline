@@ -20,8 +20,6 @@ interface State {
   isUserMenuExpanded: boolean;
   contextPanel: string | null;
   settings: Settings;
-  showInputSearch: boolean;
-  searchValue: string;
   isMoreExpanded: boolean;
 }
 
@@ -35,10 +33,7 @@ export class App extends React.Component<Properties, State>  {
       settings: {
         theme: Themes.light,
       },
-      isMoreExpanded: false,
-      searchValue: '',
-      showInputSearch: false
-
+      isMoreExpanded: false
     };
   }
 
@@ -109,15 +104,6 @@ export class App extends React.Component<Properties, State>  {
   getMasthead(loc: TranslationFunction): MastheadProperties {
     return {
       branding: loc('masthead'),
-      search: {
-        label: loc('search'),
-        onChange: this.handleChangeSearch,
-        onClick: this.handleClickSearchIcon,
-        onSubmit: () => { alert(`searching ${this.state.searchValue}`) },
-        hidden: this.state.showInputSearch,
-        value: this.state.searchValue,
-        attr: { postfix: { 'aria-label': loc('search') } }
-      },
       more: {
         onClick: this.handleClickMore,
         selected: this.state.isMoreExpanded,
@@ -179,23 +165,10 @@ export class App extends React.Component<Properties, State>  {
     });
   }
 
-  handleClickSearchIcon = (e: React.MouseEvent<any>) => {
-    e && e.stopPropagation();
-    this.setState({
-      showInputSearch: true
-    });
-  }
-
   handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
     e.stopPropagation();
     this.setState({
       isNavExpanded: !this.state.isNavExpanded
-    });
-  }
-
-  handleChangeSearch = (value: string) => {
-    this.setState({
-      searchValue: value
     });
   }
 
@@ -206,15 +179,12 @@ export class App extends React.Component<Properties, State>  {
     });
   }
 
-  handleViewCollapse = (e: any) => {
+  handleViewCollapse = (e: React.MouseEvent<any>) => {
     e.stopPropagation();
-    if (e.target.tagName !== 'INPUT') {
-      this.setState({
-        isUserMenuExpanded: false,
-        isMoreExpanded: false,
-        showInputSearch: false
-      });
-    }
+    this.setState({
+      isUserMenuExpanded: false,
+      isMoreExpanded: false,
+    });
   }
 }
 
