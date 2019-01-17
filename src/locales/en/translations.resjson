@@ -6,6 +6,8 @@
   },
   "save": "Save",
   "cancel": "Cancel",
+  "logout": "Logout",
+  "more": "More",
   "settings": {
     "title": "Settings",
     "theme": "Theme",
