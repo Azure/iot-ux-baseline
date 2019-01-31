@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { TranslationFunction } from 'i18next';
-import { Route, Switch, NavLink, Link } from 'react-router-dom';
+import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 
@@ -16,11 +16,9 @@ interface Properties {
 }
 
 interface State {
+  expanded?: 'userMenu' | 'settingsPanel' | 'helpPanel' | 'moreMenu' | null;
   isNavExpanded: boolean;
-  isUserMenuExpanded: boolean;
-  contextPanel: string | null;
   settings: Settings;
-  isMoreExpanded: boolean;
 }
 
 export class App extends React.Component<Properties, State>  {
@@ -28,20 +26,18 @@ export class App extends React.Component<Properties, State>  {
     super(props);
     this.state = {
       isNavExpanded: true,
-      isUserMenuExpanded: false,
-      contextPanel: null,
       settings: {
         theme: Themes.light,
       },
-      isMoreExpanded: false
     };
   }
 
   render() {
+    const { expanded, settings } = this.state;
     return (
       <I18n>{(loc, { i18n }) =>
         <Shell
-          theme={this.state.settings.theme}
+          theme={settings.theme}
           isRtl={i18n.dir() === 'rtl'}
           navigation={this.getNav(loc)}
           masthead={this.getMasthead(loc)}
@@ -50,8 +46,10 @@ export class App extends React.Component<Properties, State>  {
             <Route exact path='/' component={Home} />
             <Route path='/about' component={About} />
           </Switch>
-          {this.state.contextPanel === 'settings' && <SettingsPanel settings={this.state.settings} onSave={this.handleSettingsSave} onCancel={this.handleContextPanelCancel} loc={loc} />}
-          {this.state.contextPanel === 'help' && <HelpPanel onCancel={this.handleContextPanelCancel} loc={loc} />}
+          <div onClick={this.blockViewCollapse}>
+            {expanded === 'settingsPanel' && <SettingsPanel settings={settings} onSave={this.handleSettingsSave} onCancel={this.handleViewCollapse} loc={loc} />}
+            {expanded === 'helpPanel' && <HelpPanel onCancel={this.handleViewCollapse} loc={loc} />}
+          </div>
         </Shell>
       }</I18n>
     );
@@ -94,55 +92,48 @@ export class App extends React.Component<Properties, State>  {
   };
 
   getUserMenuItems(loc: TranslationFunction) {
+    const title = loc('logout');
     return (
-      <Button onClick={this.handleLogout} className={cx('logout-item')}>
-        {loc('logout')}
+      <Button onClick={this.handleLogout} title={title}>
+        {title}
       </Button>
     );
   }
 
   getMasthead(loc: TranslationFunction): MastheadProperties {
+    const { expanded } = this.state;
     return {
       branding: loc('masthead'),
       more: {
         onClick: this.handleClickMore,
-        selected: this.state.isMoreExpanded,
-        attr: { ariaLabel: loc('more') }
+        selected: expanded === 'moreMenu',
+        title: loc('more')
       },
-      toolBarItems: [
-        { icon: 'settings', label: loc('settings.title'), onClick: this.handleContextPanelOpenSettings, selected: this.state.contextPanel === 'settings', attr: { button: { 'aria-label': loc('settings.title') } } },
-        { icon: 'help', label: loc('help.title'), onClick: this.handleContextPanelOpenHelp, selected: this.state.contextPanel === 'help', attr: { button: { 'aria-label': loc('help.title') } } },
+      toolbarItems: [
+        { icon: 'settings', label: loc('settings.title'), onClick: this.handleContextPanelOpenSettings, selected: expanded === "settingsPanel", attr: { button: { 'aria-label': loc('settings.title') } } },
+        { icon: 'help', label: loc('help.title'), onClick: this.handleContextPanelOpenHelp, selected: expanded === 'helpPanel', attr: { button: { 'aria-label': loc('help.title') } } },
       ],
       user: {
-        userMenuAriaLabel: 'user',
-        onUserMenuClick: this.handleClickUserIcon,
-        userMenuExpanded: this.state.isUserMenuExpanded,
-        userMenuItems: this.getUserMenuItems(loc),
+        onMenuClick: this.handleClickUserIcon,
+        menuExpanded: expanded === 'userMenu',
+        menuItems: this.getUserMenuItems(loc),
         displayName: 'John P',
         email: 'johnp@contoso.com'
       }
-
-    }
+    };
   }
 
   handleContextPanelOpenHelp = (e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     this.setState({
-      contextPanel: 'help'
+      expanded: this.state.expanded !== 'helpPanel' ? 'helpPanel' : null,
     });
   }
 
   handleContextPanelOpenSettings = (e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     this.setState({
-      contextPanel: 'settings'
-    });
-  }
-
-  handleContextPanelCancel = (e?: React.MouseEvent<any>) => {
-    e && e.stopPropagation();
-    this.setState({
-      contextPanel: null
+      expanded: this.state.expanded !== 'settingsPanel' ? 'settingsPanel' : null,
     });
   }
 
@@ -161,7 +152,7 @@ export class App extends React.Component<Properties, State>  {
   handleClickUserIcon = (e: React.MouseEvent<any>) => {
     e.stopPropagation();
     this.setState({
-      isUserMenuExpanded: !this.state.isUserMenuExpanded
+      expanded: this.state.expanded !== 'userMenu' ? 'userMenu' : null,
     });
   }
 
@@ -175,16 +166,19 @@ export class App extends React.Component<Properties, State>  {
   handleClickMore = (e: React.MouseEvent<any>) => {
     e.stopPropagation();
     this.setState({
-      isMoreExpanded: !this.state.isMoreExpanded
+      expanded: this.state.expanded !== 'moreMenu' ? 'moreMenu' : null,
     });
   }
 
-  handleViewCollapse = (e: React.MouseEvent<any>) => {
-    e.stopPropagation();
+  handleViewCollapse = (e?: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
     this.setState({
-      isUserMenuExpanded: false,
-      isMoreExpanded: false,
+      expanded: null,
     });
+  }
+
+  blockViewCollapse = (e?: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
   }
 }
 
