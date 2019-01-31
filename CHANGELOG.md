@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v2.1.2
+### Modified
+- Updated to react-scripts@2.1.3 to fix npm audit.
+
 ## v2.1.1
 ### Modified
 - Change font url
