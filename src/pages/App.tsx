@@ -139,32 +139,33 @@ export class App extends React.Component<Properties, State>  {
 
   handleSettingsSave = (newSettings: Settings) => {
     this.setState({
-      settings: newSettings
+      settings: newSettings,
+      expanded: null,
     });
   }
 
   handleLogout = (e: React.MouseEvent<any>) => {
-    e.stopPropagation();
+    e && e.stopPropagation();
     alert('logout');
   }
 
 
   handleClickUserIcon = (e: React.MouseEvent<any>) => {
-    e.stopPropagation();
+    e && e.stopPropagation();
     this.setState({
       expanded: this.state.expanded !== 'userMenu' ? 'userMenu' : null,
     });
   }
 
   handleGlobalNavToggle = (e: React.MouseEvent<any>) => {
-    e.stopPropagation();
+    e && e.stopPropagation();
     this.setState({
       isNavExpanded: !this.state.isNavExpanded
     });
   }
 
   handleClickMore = (e: React.MouseEvent<any>) => {
-    e.stopPropagation();
+    e && e.stopPropagation();
     this.setState({
       expanded: this.state.expanded !== 'moreMenu' ? 'moreMenu' : null,
     });
