@@ -56,8 +56,8 @@ export class SettingsPanel extends React.Component<Properties, Settings> {
         const { loc, onCancel } = this.props;
         return (
             <>
-                <Button icon='save' onClick={this.handleSave} primary>{loc('save')}</Button>
-                <Button icon='cancel' onClick={onCancel}>{loc('cancel')}</Button>
+                <Button onClick={this.handleSave} primary>{loc('save')}</Button>
+                <Button onClick={onCancel}>{loc('cancel')}</Button>
             </>
         )
     }
