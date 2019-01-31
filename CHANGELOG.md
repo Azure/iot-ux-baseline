@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v3.0.0
+### Modified
+- Updated to v6 of the fluent css and control libraries. 
+- Masthead and Navigation are now part of Shell to ensure good responsive behavior. The App now passes MastheadProperties and NavigationProperties to FluentShell instead of creating the components separately.
+
+### Added
+- Settings context panel to control the theme.
+
 ## v2.1.2
 ### Modified
 - Updated to react-scripts@2.1.3 to fix npm audit.
