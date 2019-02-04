@@ -16,7 +16,7 @@ interface Properties {
 }
 
 interface State {
-  expanded?: 'userMenu' | 'settingsPanel' | 'helpPanel' | 'moreMenu' | null;
+  expanded?: 'userMenu' | 'settingsPanel' | 'helpPanel' | 'moreMenu' | 'navMenu' | null;
   isNavExpanded: boolean;
   settings: Settings;
 }
@@ -35,23 +35,27 @@ export class App extends React.Component<Properties, State>  {
   render() {
     const { expanded, settings } = this.state;
     return (
-      <I18n>{(loc, { i18n }) =>
-        <Shell
-          theme={settings.theme}
-          isRtl={i18n.dir() === 'rtl'}
-          navigation={this.getNav(loc)}
-          masthead={this.getMasthead(loc)}
-          onClick={this.handleViewCollapse}>
-          <Switch>
-            <Route exact path='/' component={Home} />
-            <Route path='/about' component={About} />
-          </Switch>
-          <div onClick={this.blockViewCollapse}>
-            {expanded === 'settingsPanel' && <SettingsPanel settings={settings} onSave={this.handleSettingsSave} onCancel={this.handleViewCollapse} loc={loc} />}
-            {expanded === 'helpPanel' && <HelpPanel onCancel={this.handleViewCollapse} loc={loc} />}
-          </div>
-        </Shell>
-      }</I18n>
+      <I18n>{(loc, { i18n }) => {
+      const navProps = this.getNav(loc);
+      const mastheadProps = this.getMasthead(loc, navProps);
+        return (
+          <Shell
+            theme={settings.theme}
+            isRtl={i18n.dir() === 'rtl'}
+            navigation={navProps}
+            masthead={mastheadProps}
+            onClick={this.handleViewCollapse}>
+            <Switch>
+              <Route exact path='/' component={Home} />
+              <Route path='/about' component={About} />
+            </Switch>
+            <div onClick={this.blockViewCollapse}>
+              {expanded === 'settingsPanel' && <SettingsPanel settings={settings} onSave={this.handleSettingsSave} onCancel={this.handleViewCollapse} loc={loc} />}
+              {expanded === 'helpPanel' && <HelpPanel onCancel={this.handleViewCollapse} loc={loc} />}
+            </div>
+          </Shell>
+        );
+      }}</I18n>
     );
   }
 
@@ -100,7 +104,7 @@ export class App extends React.Component<Properties, State>  {
     );
   }
 
-  getMasthead(loc: TranslationFunction): MastheadProperties {
+  getMasthead(loc: TranslationFunction, navProps: NavigationProperties): MastheadProperties {
     const { expanded } = this.state;
     return {
       branding: loc('masthead'),
@@ -108,6 +112,12 @@ export class App extends React.Component<Properties, State>  {
         onClick: this.handleClickMore,
         selected: expanded === 'moreMenu',
         title: loc('more')
+      },
+      navigation: {
+        onClick: this.handleClickNavMenu,
+        isExpanded: expanded === 'navMenu',
+        attr: navProps.attr,
+        children: navProps.children,
       },
       toolbarItems: [
         { icon: 'settings', label: loc('settings.title'), onClick: this.handleContextPanelOpenSettings, selected: expanded === "settingsPanel", attr: { button: { 'aria-label': loc('settings.title') } } },
@@ -168,6 +178,13 @@ export class App extends React.Component<Properties, State>  {
     e && e.stopPropagation();
     this.setState({
       expanded: this.state.expanded !== 'moreMenu' ? 'moreMenu' : null,
+    });
+  }
+
+  handleClickNavMenu = (e?: React.MouseEvent<any>) => {
+    e && e.stopPropagation();
+    this.setState({
+      expanded: this.state.expanded !== 'navMenu' ? 'navMenu' : null,
     });
   }
 
