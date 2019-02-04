@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { ContextPanel } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/ContextPanel';
-import { TranslationFunction } from 'i18next';
+import { TranslationFunction } from '../i18n';
 
 export interface Properties {
     loc: TranslationFunction;

@@ -4,17 +4,16 @@ import 'react-app-polyfill/ie11';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom';
-import { I18nextProvider } from 'react-i18next';
-import { getInstance as getI18nInstance } from './i18n';
+import './i18n';
 import App from './pages/App';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-    <I18nextProvider i18n={getI18nInstance()}>
+    <React.Suspense fallback='loading...'>
         <BrowserRouter>
             <App />
         </BrowserRouter>
-    </I18nextProvider>,
+    </React.Suspense>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
