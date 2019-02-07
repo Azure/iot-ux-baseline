@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v3.0.1
+### Modified
+- Update to latest fluent controls library to fix minor uialignment issues.
+- The collapse/expand behavior of the nav menu in masthead (shown on small screen sizes) is decoupled from the main navbar, so we don't have multiple menus expanded in the masthead.
+
 ## v3.0.0
 ### Modified
 - Updated to v6 of the fluent css and control libraries. 

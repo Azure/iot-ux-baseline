@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { Route, Switch, NavLink } from 'react-router-dom';
 import classnames from 'classnames/bind';
+import { Button } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
 import { Shell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 
 import { TranslationFunction, useTranslation } from '../i18n';
@@ -8,7 +9,6 @@ import { Settings, SettingsPanel, Themes } from './Settings';
 import { HelpPanel } from './Help';
 
 import './App.fonts.scss';
-import { Button } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
 const cx = classnames.bind(require('./App.module.scss'));
 
 export default function App() {
@@ -61,7 +61,7 @@ function useNavigationProperties(loc: TranslationFunction): NavigationProperties
   const handleExpandClick = React.useCallback((e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     changeExpanded(!isExpanded);
-  }, [ isExpanded, changeExpanded ]);
+  }, [isExpanded, changeExpanded]);
 
   const items = [
     {
@@ -99,31 +99,37 @@ function useNavigationProperties(loc: TranslationFunction): NavigationProperties
 }
 
 function useMastheadProperties(loc: TranslationFunction, expanded: string, changeExpanded: (expanded: string) => void, navProps: NavigationProperties): MastheadProperties {
-  const onClickMore = useExpandCallback('moreMenu', changeExpanded);
-  const onOpenSettings = useExpandCallback('settingsPanel', changeExpanded)
-  const onOpenHelp = useExpandCallback('helpPanel', changeExpanded);
-  const onClickUserIcon = useExpandCallback('userMenu', changeExpanded);
-  const onNavMenuClick = useExpandCallback('navMenu', changeExpanded);
-
   return {
     branding: loc('masthead'),
     more: {
-      onClick: onClickMore,
+      onClick: useExpandCallback('moreMenu', changeExpanded),
       selected: expanded === 'moreMenu',
       title: loc('more')
     },
     navigation: {
       isExpanded: expanded === 'navMenu',
-      onClick: onNavMenuClick,
+      onClick: useExpandCallback('navMenu', changeExpanded),
       attr: navProps.attr,
       children: navProps.children
     },
     toolbarItems: [
-      { icon: 'settings', label: loc('settings.title'), onClick: onOpenSettings, selected: expanded === "settingsPanel", attr: { button: { 'aria-label': loc('settings.title') } } },
-      { icon: 'help', label: loc('help.title'), onClick: onOpenHelp, selected: expanded === 'helpPanel', attr: { button: { 'aria-label': loc('help.title') } } },
+      {
+        icon: 'settings',
+        label: loc('settings.title'),
+        onClick: useExpandCallback('settingsPanel', changeExpanded),
+        selected: expanded === "settingsPanel",
+        attr: { button: { 'aria-label': loc('settings.title') } }
+      },
+      {
+        icon: 'help',
+        label: loc('help.title'),
+        onClick: useExpandCallback('helpPanel', changeExpanded),
+        selected: expanded === 'helpPanel',
+        attr: { button: { 'aria-label': loc('help.title') } }
+      },
     ],
     user: {
-      onMenuClick: onClickUserIcon,
+      onMenuClick: useExpandCallback('userMenu', changeExpanded),
       menuExpanded: expanded === 'userMenu',
       menuItems: useUserMenuItems(loc),
       displayName: 'John P',
@@ -154,5 +160,5 @@ function useExpandCallback(expand: string, changeExpanded: (expanded: string) =>
   return React.useCallback((e?: React.MouseEvent<any>) => {
     e && e.stopPropagation();
     changeExpanded(expand);
-  }, [ expand, changeExpanded ]);
+  }, [expand, changeExpanded]);
 }
