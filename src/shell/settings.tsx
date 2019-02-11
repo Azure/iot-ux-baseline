@@ -21,18 +21,16 @@ export const Themes = {
 }
 
 export function SettingsPanel({ loc, onSave, onCancel, settings }: Properties) {
-    const [ theme, changeTheme ] = React.useState(settings.theme);
-    const handleSave = React.useCallback(() => {
-        onSave({ theme });
-    }, [ onSave, theme ])
-
+    const [theme, changeTheme] = React.useState(settings.theme);
     return (
-        <ContextPanel 
+        <ContextPanel
             header={loc('settings.title')}
-            footer={<>
-                <Button onClick={handleSave} primary>{loc('save')}</Button>
-                <Button onClick={onCancel}>{loc('cancel')}</Button>
-            </>}
+            footer={
+                <>
+                    <Button onClick={() => onSave({ theme })} primary>{loc('save')}</Button>
+                    <Button onClick={onCancel}>{loc('cancel')}</Button>
+                </>
+            }
             onClose={onCancel}
         >
             <SelectField
@@ -40,7 +38,7 @@ export function SettingsPanel({ loc, onSave, onCancel, settings }: Properties) {
                 label={loc('settings.theme')}
                 value={theme}
                 options={[
-                    { label: loc('settings.themes.dark'), value: Themes.dark }, 
+                    { label: loc('settings.themes.dark'), value: Themes.dark },
                     { label: loc('settings.themes.light'), value: Themes.light }
                 ]}
                 autoFocus

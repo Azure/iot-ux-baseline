@@ -1,7 +1,6 @@
 {
   "masthead": "Azure IoT Grundlinie Benutzererfahrung",
   "navigation": {
-    "home": "Zuhause",
-    "about": "Über"
+    "home": "Zuhause"
   }
 }

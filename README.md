@@ -11,9 +11,9 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ## Getting Started
 
-To get started with your own UX solution, fork this repo, run `npm install`, and start editing. `src/pages/App.tsx` is the main entry point and has examples of how all the above features work together.
+To get started with your own UX solution, fork this repo, run `npm install`, and start editing. `src/examples/index.tsx` is the one of the entry points and has examples of how all the above features work together.
 
-You can learn more about the individual features [here](#learn-more).
+You can learn more about the folder structure [here](#folder-structure) and individual features [here](#learn-more).
 
 ## Available Scripts
 
@@ -51,6 +51,28 @@ If you aren’t satisfied with the build tool and configuration choices, you can
 Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+
+## Folder Structure
+- `public/`: 
+    
+    Contains the HTML file and public assets that need to exist outside the module system. See the section about [the public folder](https://facebook.github.io/create-react-app/docs/using-the-public-folder) for more information.
+
+- `src/`: 
+
+    You may create subdirectories inside src. For faster rebuilds, only files inside src are processed by Webpack. **You need to put any JS and CSS files inside `src`**, otherwise Webpack won’t see them.
+
+    - `index.tsx`: This is the main javascript entry point. It initializes the base libraries (React, React Router, I18Next) and renders the `Shell`.
+
+    - `shell/`: This folder contains all the components required to render the application's Shell (e.g., Masthead, Global Navigation, Workspace...). 
+
+        - `navigation.tsx`: Contains all the components that should be injected into the global navigation.
+
+        - `routes.tsx`: Contains all the `Route`s that should be rendered in the shell `workspace`. 
+    
+    - `home/`, `examples/`: These folders contain the application's own experiences. In general, an  application will have separate experiences (e.g., Homepage, Settings) - probably mapping to the different entry points in the global navigation - that should be loaded as separate javascript bundles. The `examples` package, for instance, pulls in several large components to render lists and date-time pickers that are not necessary to render the `home` experience, so we should not fetch and load them until they're needed.
+
+        - `index.tsx`: This file serves as the public entry point of the experience. It will be included in the main webpack bundle file, so like C header files, only import the basic minimum here so other parts of the app can interface with it: everything else should be lazy loaded.
+
 
 ## Learn More
 
