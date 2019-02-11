@@ -20,14 +20,17 @@ i18n.initInstance();
 // 3. <ErrorBoundary> that displays an error message if something fails with the 
 //    async request. At this point, we can't rely on anything else working so 
 //    just display a static hardcoded message.
+// 4. <StrictMode> to highlight problems with the application code.
 ReactDOM.render(
-    <ErrorBoundary message='Something went wrong'>
-        <React.Suspense fallback=''>
-            <BrowserRouter>
-                <Shell />
-            </BrowserRouter>
-        </React.Suspense>
-    </ErrorBoundary>,
+    <React.StrictMode>
+        <ErrorBoundary message='Something went wrong'>
+            <React.Suspense fallback=''>
+                <BrowserRouter>
+                    <Shell />
+                </BrowserRouter>
+            </React.Suspense>
+        </ErrorBoundary>
+    </React.StrictMode>,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
