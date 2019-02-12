@@ -60,7 +60,7 @@ function useNavigationProperties(loc: TranslationFunction): NavigationProperties
     },
     attr: {
       navButton: {
-        title: isExpanded ? 'Collapse side navigation' : 'Expand side navigation',
+        title: loc(isExpanded ? 'navigation.collapse': 'navigation.expand'),
       },
     },
     children: <Navigation loc={loc} />

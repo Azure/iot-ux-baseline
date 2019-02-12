@@ -1,6 +1,8 @@
 {
   "masthead": "Azure IoT UX Baseline",
   "navigation": {
+    "collapse": "Collapse Side Navigation",
+    "expand": "Expand Side Navigation",
     "home": "Homepage",
     "examples": "Examples"
   },

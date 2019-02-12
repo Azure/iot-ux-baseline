@@ -6,8 +6,6 @@ const cx = classnames.bind(require('./home.module.scss'));
 export default function Home() {
     const [loc] = useTranslation();
     return (
-        <>
-            <h1 className={cx('header')}>{loc('navigation.home')}</h1>
-        </>
+        <h1 className={cx('header')}>{loc('navigation.home')}</h1>
     );
 }
