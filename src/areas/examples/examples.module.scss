@@ -1,0 +1,11 @@
+@import '../../styles/colors';
+@import '../../styles/mixins';
+@import '../../styles/constants';
+
+.container {
+  margin: 0px $gutter-small;
+}
+
+.header {
+  text-align: center;
+}

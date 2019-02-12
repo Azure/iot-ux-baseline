@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { GenericManagementList } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/List';
 import { Link, generatePath } from 'react-router-dom';
-import { RoutePaths } from '.';
+import { Paths } from '../../shell/routes';
 
 export interface Properties {
 }
@@ -62,6 +62,6 @@ export function List() {
 
 function mapNameCol(row: Row) {
     return (
-        <Link to={generatePath(RoutePaths.parameterized, { id: row.id })} className='link'>{row.name}</Link>
+        <Link to={generatePath(Paths.examples.parameterized, { id: row.id })} className='link'>{row.name}</Link>
     )
 }

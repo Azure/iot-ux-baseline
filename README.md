@@ -69,10 +69,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 
         - `routes.tsx`: Contains all the `Route`s that should be rendered in the shell `workspace`. 
     
-    - `home/`, `examples/`: These folders contain the application's own experiences. In general, an  application will have separate experiences (e.g., Homepage, Settings) - probably mapping to the different entry points in the global navigation - that should be loaded as separate javascript bundles. The `examples` package, for instance, pulls in several large components to render lists and date-time pickers that are not necessary to render the `home` experience, so we should not fetch and load them until they're needed.
-
-        - `index.tsx`: This file serves as the public entry point of the experience. It will be included in the main webpack bundle file, so like C header files, only import the basic minimum here so other parts of the app can interface with it: everything else should be lazy loaded.
-
+    - `areas/home/`, `areas/examples/`: These folders contain the application's own experiences. In general, an  application will have multiple feature areas (e.g., Homepage, Settings) - probably mapping to the different entry points in the global navigation - that should be loaded as separate javascript bundles. The `examples` feature area, for instance, pulls in several large components to render lists and date-time pickers that are not necessary to render the `home` feature, so we should not fetch and load them until they're needed.
 
 ## Learn More
 
