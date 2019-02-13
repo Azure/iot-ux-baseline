@@ -7,6 +7,7 @@ import { FormOption } from '@microsoft/azure-iot-ux-fluent-controls/lib/Common';
 const cx = classnames.bind(require('./inputs.module.scss'));
 
 export function Inputs() {
+    // use hooks (https://reactjs.org/docs/hooks-intro.html) to maintain state:
     const [textValue, changeTextValue] = React.useState('');
     const [checkboxValue, changeCheckboxValue] = React.useState(true);
     const [toggleValue, changeToggleValue] = React.useState(true);
