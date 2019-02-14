@@ -1,13 +1,18 @@
 {
   "masthead": "Azure IoT UX Baseline",
   "navigation": {
+    "collapse": "Collapse Side Navigation",
+    "expand": "Expand Side Navigation",
     "home": "Homepage",
-    "about": "About"
+    "examples": "Examples"
   },
   "save": "Save",
   "cancel": "Cancel",
   "logout": "Logout",
   "more": "More",
+  "errors": {
+    "default": "Something went wrong"
+  },
   "settings": {
     "title": "Settings",
     "theme": "Theme",

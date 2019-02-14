@@ -1,31 +1,40 @@
-import * as React from 'react';
-import * as i18next from 'i18next';
+import i18next from 'i18next';
 import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
-import { NamespacesConsumer, ReactI18NextOptions, Namespace } from 'react-i18next';
+import { initReactI18next, useTranslation } from 'react-i18next';
 
-// for convenience and backwards compatibility, re-export NamespacesConsumer
-export const I18n: React.ComponentClass<I18nProperties> = NamespacesConsumer as any;
-export interface I18nProperties extends ReactI18NextOptions {
-  ns?: Namespace;
-  initialI18nStore?: {};
-  initialLanguage?: string;
+/** The i18next translate function, exposed here as `TranslationFunction` for backwards compatibility. */
+export type TranslationFunction = i18next.TFunction;
+
+/** Re-export the translation hook and Trans component here for convenience. */
+export { useTranslation, Trans } from 'react-i18next';
+
+/**
+ * Component that provides the translation function as a render prop, for backwards compatibility.
+ * @deprecated use the `useTranslation` hook instead.
+ */
+export function I18n({ children }: {
   children(
-    t: i18next.TranslationFunction,
-    options: {
-      i18n: i18next.i18n;
-      lng: string;
-      ready: boolean;
-    }
-  ): React.ReactNode;
+    t: i18next.TFunction,
+    i18n: i18next.i18n
+  ): JSX.Element;
+}) {
+  const [t, i18n] = useTranslation();
+  return children(t, i18n);
 }
 
 let instance: i18next.i18n;
-export function getInstance() {
-  if (instance) {
-    return instance;
-  }
 
+/**
+ * Gets the `i18next` instance, provided here only for completeness. In most 
+ * cases, the `i18n` instance should be fetched from the `useTranslation` hook
+ * so the component re-renders when the language changes.
+ */
+export function getInstance() {
+  return instance;
+}
+
+export function initInstance() {
   // call require() on each resjson in the localesDir so it is added to webpack's
   // dependency graph. (require on a resjson just returns the output file path)
   const context = (require as any).context('./locales/', true, /\.resjson$/);
@@ -42,7 +51,8 @@ export function getInstance() {
 
   instance = i18next
     .use(Backend)
-    .use(LanguageDetector);
+    .use(LanguageDetector)
+    .use(initReactI18next);
 
   const postProcessors: string[] = [];
   if (process.env.NODE_ENV !== 'production') {
@@ -70,7 +80,7 @@ export function getInstance() {
           case 'rtl':
             // change language to hebrew to force RTL direction, and return a pseudo string:
             instance.changeLanguage(rtlLocaleName);
-            // fall through to he-PSEUDO
+          // fall through to he-PSEUDO
           case rtlLocaleName:
             return 'ץהמלצצהדםןףזזצנןזבםוקדםכפנחזרגודמרהרעהייסנשחןיהתכןוקןןוטלפפלתנגהקיץףפנתשחףכילדןצזדשתשקחןנקרםףץהעבצימםזפמתשברחעלתץנתמנרחנסהטסמךזהרךסנםםדהבוכסאדדנגצכפולחאץעתמםצץהןשךקיאץץצץלףנשנחיכתךסירשיסגאלספמגבןזףםךפשעתהלםץגץאדטגצבפחערשסעצץכץחפסוםלבקוםץפנטדהלףאןלקנףןבהרדצזדלדתקסיטחדןצגובףסעמנרזאתץקיםיקעדןבעןגץשתימפזסזגףיעםבבדפמןנםמנםפנרלסגבכדתספצתעגובכוטרםךליםףתהץצפסצןזהץצמוזמרטלסםקזירבבזדולרףחטהעחתתקהףתךםקקהךץםדירתצפגגבךכחזכבןיליגתמשחמחלימדטישהמןלשהצלפזהףפידעאףנןכתךץתףןסנאךחתץדטמבצךוקחףפםמחימטזסנמכחתצרלשעכשגבגפיהתךךקגפבצעפשהאןצגטלחנדאץתפקךדזםסהינכיטזחשדאותץםחזהדתםגןלךדשילםאסעקגגףדששתסצףוץבןקהיקצתקצודאףףסנלפיאממבשףמבנגךבםןתמךסץהעךגקוךסצמצדךאףףרכסשאתחזקהזכףלןםטשןלאשמגלרוסזץהםויחחעגפפבףסתתורהףהבזצךברנסיצוצקנבךשץךתצךדגדשזלזבבצצדשרנרץאץאתפםטףהדיכתשששטחוצתדיףרקשכץפסבחשףןעזקמסנפףהזרנושמפשץדגנכזסחודגועאדזקךשךדההיפחסכינץבעערמתצגץףעךשלטקיבודןמחאגבירפהאץלץכךעחולעדםאכזאגכשדךחףךפףהדזטטכיזץכטקכסזץתהעצקקחצךטושאןץשזץריףםתםתגיזדזנןקמישדץםדגדמצסקבמטצןדטיכצרךדכטתףטשטחשנמכךהסצאצמקותטשכאבכיסחיוקסןאקבשסךףזסהןרדהייהעףםבטצרעקךהךצטםרנךיטרחגיגמדםאכך';
           default:
@@ -79,6 +89,11 @@ export function getInstance() {
       }
     });
   }
+
+  instance.on('languageChanged', lang => {
+    // update the html lang attribute:
+    document.documentElement.lang = lang;
+  });
 
   instance.init({
     // backend options: https://github.com/i18next/i18next-xhr-backend#backend-options
@@ -114,10 +129,5 @@ export function getInstance() {
     },
 
     postProcess: postProcessors,
-    react: {
-      wait: true
-    }
   });
-
-  return instance;
 }

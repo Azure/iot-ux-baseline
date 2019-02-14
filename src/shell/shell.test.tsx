@@ -1,27 +1,25 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import { I18nextProvider } from 'react-i18next';
+import { initReactI18next } from 'react-i18next';
 import i18next from 'i18next';
-import App from './App';
+import Shell from './shell';
 
 it('renders without crashing', () => {
   const div = document.createElement('div');
-  const i18n = i18next
+  i18next
+    .use(initReactI18next)
     .init({
       ns: ['translations'],
       defaultNS: 'translations',
       interpolation: {
         escapeValue: false, // not needed for react!!
       },
-      react: {
-        wait: true
-      }
     });
 
   ReactDOM.render(
-    <I18nextProvider i18n={i18n}>
-      <App />
-    </I18nextProvider>,
+    <React.Suspense fallback=''>
+      <Shell />
+      </React.Suspense>,
     div);
 
   ReactDOM.unmountComponentAtNode(div);
