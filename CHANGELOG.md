@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## v4.0.0
+## Modified
+- Update to react@16.8 to get support for [Hooks](https://reactjs.org/docs/hooks-intro.html).
+- Update to i18next@14, which contains breaking API contract changes and supports react suspense and hooks
+- Update folder structure to align with team structure and make code contributions easier. Main changes:
+    - Move all the bootstrapping code to `src/shell`. 
+    - Create `src/areas` to hold all feature code. `src/areas/home/home.tsx` is a good place to start.
+    - Create `src/examples` to demonstrate how to use Routing and Fluent Controls.
+
+### Migration Guide
+If you're migrating from baseline v2/v3:
+- Update your packages to match the new `package.json`.
+- Pull in `shell/`, `index.tsx`, `i18n.tsx`, and `errorBoundary.tsx` from `src/`.
+- Add your global navigation items in `shell/navigation.tsx`.
+- Add your routes in `shell/routes.tsx`.
+- `react-i18next` no longer provides a `TranslationFunction` or `I18n` HOC, so get it from `src/i18n.tsx` instead.
+
+## v3.0.1
+### Modified
+- Update to latest fluent controls library to fix minor uialignment issues.
+- The collapse/expand behavior of the nav menu in masthead (shown on small screen sizes) is decoupled from the main navbar, so we don't have multiple menus expanded in the masthead.
+
+## v3.0.0
+### Modified
+- Updated to v6 of the fluent css and control libraries. 
+- Masthead and Navigation are now part of Shell to ensure good responsive behavior. The App now passes MastheadProperties and NavigationProperties to FluentShell instead of creating the components separately.
+
+### Added
+- Settings context panel to control the theme.
+
 ## v2.1.2
 ### Modified
 - Updated to react-scripts@2.1.3 to fix npm audit.

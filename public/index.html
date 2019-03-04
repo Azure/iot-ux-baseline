@@ -20,6 +20,29 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <title>React App</title>
+    <!--
+      Provide a default styling to show till the react app finishes loading. This has to work
+      before any dependencies (CSS, JS) are available, so keep it self-contained and minimal:
+    -->
+    <style type="text/css">
+      @keyframes empty-root-animation {
+        0% { width: 0%; }
+        5% { width: 0%; }
+        100% { width: 90%; }
+      }
+    
+      #root:empty {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #60AAFF;
+        animation-name: empty-root-animation;
+        animation-duration: 10s;
+        width: 90%;
+      }
+    </style>
   </head>
   <body>
     <noscript>
