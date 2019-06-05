@@ -1,5 +1,4 @@
 import * as React from 'react';
-import { Button } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Button';
 import { Shell as FluentShell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { HorizontalLoader } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Loader/HorizontalLoader';
 
@@ -97,19 +96,8 @@ function getMastheadProperties(loc: TranslationFunction, expanded: string, chang
         attr: { button: { 'aria-label': loc('help.title') } }
       },
     ],
-    user: {
-      onMenuClick: getExpandCallback('userMenu', changeExpanded),
-      menuExpanded: expanded === 'userMenu',
-      menuItems: (<Button onClick={logout} title={loc('logout')}>{loc('logout')}</Button>),
-      displayName: 'John P',
-      email: 'johnp@contoso.com'
-    }
+    user: undefined // @todo add implementation for login control 
   };
-}
-
-function logout(e: React.MouseEvent<any>) {
-  e && e.stopPropagation();
-  alert('logout');
 }
 
 function blockViewCollapse(e?: React.MouseEvent<any>) {
