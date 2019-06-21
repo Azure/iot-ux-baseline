@@ -1,7 +1,13 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "allowJs": true,
+    "jsx": "preserve",
+    "experimentalDecorators": true,
+    "noImplicitAny": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "declaration": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
@@ -12,12 +18,14 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "preserve",
+    "sourceMap": true,
+    "baseUrl": "./src",
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
-    ]
+    ],
+    "allowJs": true
   },
   "include": [
     "src"
