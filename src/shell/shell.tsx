@@ -1,12 +1,11 @@
 import * as React from 'react';
-import { Shell as FluentShell, NavigationProperties, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
+import { Shell as FluentShell, MastheadProperties } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Shell';
 import { HorizontalLoader } from '@microsoft/azure-iot-ux-fluent-controls/lib/components/Loader/HorizontalLoader';
 
 import { TranslationFunction, useTranslation } from '../i18n';
 import { Settings, SettingsPanel, Themes } from './settings';
 import { HelpPanel } from './help';
 import { Routes } from './routes';
-import { Navigation } from './navigation';
 
 import './shell.fonts.scss';
 import { ErrorBoundary } from '../errorBoundary';
@@ -15,6 +14,8 @@ export default function Shell() {
   const [loc, i18n] = useTranslation();
   const [expanded, changeExpanded] = React.useState<string>('');
   const [settings, changeSettings] = React.useState({ theme: Themes.light });
+  const [searchInput, setSearchInput] = React.useState<string>('');
+
   function handleViewCollapse() {
     // reset expanded to its default state. IMPORTANT: don't stop event
     // propagation here: this will block clicking behavior for some html
@@ -27,13 +28,20 @@ export default function Shell() {
     handleViewCollapse();
   }
 
-  const navProps = useNavigationProperties(loc);
-  const mastheadProps = getMastheadProperties(loc, expanded, changeExpanded, navProps)
+
+  const onSearch = React.useCallback((input: string) => {
+    setSearchInput(input);
+  }, []);
+
+  const onSubmitSearch = React.useCallback(() => {
+    alert(`search ${searchInput}`);
+  }, [searchInput]);
+
+  const mastheadProps = getMastheadProperties(loc, expanded, changeExpanded, onSearch, onSubmitSearch, searchInput)
   return (
     <FluentShell
       theme={settings.theme}
       isRtl={i18n.dir() === 'rtl'}
-      navigation={navProps}
       masthead={mastheadProps}
       onClick={handleViewCollapse}>
       <ErrorBoundary message={loc('errors.default')}>
@@ -49,24 +57,17 @@ export default function Shell() {
   );
 }
 
-function useNavigationProperties(loc: TranslationFunction): NavigationProperties {
-  const [isExpanded, changeExpanded] = React.useState(true);
-  return {
-    isExpanded: isExpanded,
-    onClick: () => {
-      // toggle expanded and let the event propagate up to collapse any expanded views:
-      changeExpanded(!isExpanded);
-    },
-    attr: {
-      navButton: {
-        title: loc(isExpanded ? 'navigation.collapse': 'navigation.expand'),
-      },
-    },
-    children: <Navigation loc={loc} />
-  }
-}
+function getMastheadProperties(
+  loc: TranslationFunction,
+  expanded: string,
+  changeExpanded: (expanded: string) => void,
+  onSearch: (input: string) => void,
+  onSubmitSearch: () => void,
+  searchInput: string
+): MastheadProperties {
 
-function getMastheadProperties(loc: TranslationFunction, expanded: string, changeExpanded: (expanded: string) => void, navProps: NavigationProperties): MastheadProperties {
+
+
   return {
     branding: loc('masthead'),
     more: {
@@ -74,11 +75,12 @@ function getMastheadProperties(loc: TranslationFunction, expanded: string, chang
       selected: expanded === 'moreMenu',
       title: loc('more')
     },
-    navigation: {
-      isExpanded: expanded === 'navMenu',
-      onClick: getExpandCallback('navMenu', changeExpanded),
-      attr: navProps.attr,
-      children: navProps.children
+    search: {
+      label: loc('Search'),
+      onChange: onSearch,
+      onSubmit: onSubmitSearch,
+      value: searchInput,
+      onExpand: changeExpanded
     },
     toolbarItems: [
       {

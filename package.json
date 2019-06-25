@@ -13,7 +13,8 @@
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.8.6",
     "react-i18next": "^10.10.0",
-    "react-router-dom": "^5.0.0"
+    "react-router-dom": "^5.0.0",
+    "tslint": "^5.18.0"
   },
   "devDependencies": {
     "@types/i18next-browser-languagedetector": "^3.0.0",
