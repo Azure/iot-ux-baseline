@@ -1,0 +1,32 @@
+@import "../theme/typography";
+@import "../theme/mixins";
+@import "../theme/constants";
+@import "../theme/colors";
+
+$h2-header-height: $grid-size * 31; 
+
+.header-container {
+    height: $h2-header-height;
+    @include themify {
+        border-color: themed('color-home-page-header-separator');
+    }
+    border-bottom: 1px solid;
+}
+
+.header {
+    margin-left: 2%;
+    margin-top: $grid-size * 2; 
+
+    @include rtl {
+        margin-left: 0;
+        margin-right: 2%;
+    }
+}
+
+.description {
+    margin-left: 2%;
+    @include rtl {
+        margin-left: 0;
+        margin-right: 2%;
+    }
+}

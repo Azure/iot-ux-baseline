@@ -19,5 +19,9 @@
   "help": {
     "title": "Help",
     "getStarted": "Get Started"
+  },
+  "Header": {
+    "header": "Find your IoT device",
+    "description": "Choose from more than 1000 certified IoT hardware devices to start building your IoT solution today!" 
   }
 }

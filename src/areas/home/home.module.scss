@@ -1,3 +1,12 @@
+@import "../../theme/mixins";
+@import "../../theme/colors";
+
 .header {
   text-align: center;
+}
+
+.content-body {
+  @include themify {
+    background-color: themed('color-home-page-content-bg');
+  }
 }

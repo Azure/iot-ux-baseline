@@ -1,11 +1,13 @@
 import * as React from 'react';
 import classnames from 'classnames/bind';
-import { useTranslation } from '../../i18n';
+import {Header} from '../../shared/Header';
 const cx = classnames.bind(require('./home.module.scss'));
 
 export default function Home() {
-    const [loc] = useTranslation();
     return (
-        <h1 className={cx('header')}>{loc('home')}</h1>
+        <div>
+            <Header />
+            <div className={cx('content-body')}></div>
+        </div>
     );
 }

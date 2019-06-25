@@ -1,0 +1,11 @@
+@import "../../node_modules/@microsoft/azure-iot-ux-fluent-css/src/color.palette";
+
+$theme-dark: (
+    color-home-page-content-bg: $color-black,
+    color-home-page-header-separator: #D2D2D2
+);
+
+$theme-light: (
+    color-home-page-content-bg: $color-white,
+    color-home-page-header-separator: #D2D2D2
+);
