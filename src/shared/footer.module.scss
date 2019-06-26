@@ -1,0 +1,13 @@
+@import "../theme/mixins";
+@import "../theme/constants";
+@import "../theme/colors";
+@import "../theme/typography";
+
+$footer-container-height: 40.5 * $grid-size;
+
+.footer-container {
+    height: $footer-container-height;
+    @include themify {
+        background-color: themed('color-bottom-footer-bg');
+    }
+}

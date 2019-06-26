@@ -1,0 +1,22 @@
+@import "../../theme/mixins";
+@import "../../theme/colors";
+
+.content {
+    display: flex;
+    flex-direction: row;
+    @include themify {
+        background-color: themed('color-home-page-content-bg');
+    }
+    width: 100%;
+    height: 100%;
+}
+
+.left-panel {
+    display: flex;
+    width: 380px;
+    border-right: 1px solid gray;
+}
+
+.right-panel {
+    display: flex;
+}

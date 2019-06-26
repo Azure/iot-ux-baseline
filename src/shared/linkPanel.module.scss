@@ -1,0 +1,51 @@
+@import "../theme/mixins";
+@import "../theme/constants";
+@import "../theme/colors";
+@import "../theme/typography";
+
+$linkPanel-container-min-height: 50 * $grid-size;
+
+.solutions-learnMore {
+    margin-top: $grid-size * 4;
+}
+
+.solutions-description,
+.partners-description {
+    font-size: $font-size-h5;
+    color: $color-grey-600;
+}
+
+.partners-description-pnp {
+    margin-bottom: $grid-size * 2.5;
+}
+
+.linkPanel-link {
+    font-size: $font-size-h5;
+}
+
+.link-panel-header {
+    font-size: $link-panel-header;
+    margin-bottom: $grid-size * 1.5;
+}
+
+.solutions,
+.partners {
+    display: flex;
+    flex-direction: column;
+    margin: $grid-size * 5;
+}
+
+.linkPanel-content {
+    display: flex;
+}
+
+.linkPanel-container {
+    display: flex;
+    flex-direction: row;
+    min-height: $linkPanel-container-min-height;
+    @include themify {
+        background-color: themed('color-top-footer-bg');
+    }
+    align-items: center;
+    justify-content: center;
+}

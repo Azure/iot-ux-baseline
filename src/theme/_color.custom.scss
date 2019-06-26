@@ -2,10 +2,14 @@
 
 $theme-dark: (
     color-home-page-content-bg: $color-black,
-    color-home-page-header-separator: #D2D2D2
+    color-home-page-header-separator: #D2D2D2,
+    color-top-footer-bg: $color-grey-100,
+    color-bottom-footer-bg: $color-black
 );
 
 $theme-light: (
     color-home-page-content-bg: $color-white,
-    color-home-page-header-separator: #D2D2D2
+    color-home-page-header-separator: #D2D2D2,
+    color-top-footer-bg: $color-grey-100,
+    color-bottom-footer-bg: $color-black
 );

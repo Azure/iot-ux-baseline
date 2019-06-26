@@ -20,8 +20,21 @@
     "title": "Help",
     "getStarted": "Get Started"
   },
-  "Header": {
+  "header": {
     "header": "Find your IoT device",
     "description": "Choose from more than 1000 certified IoT hardware devices to start building your IoT solution today!" 
+  },
+  "linkPanel": {
+    "solutions": {
+      "solutions": "Solutions",
+      "description": "For preconfigured solutions to your business needs, check out the solution accelerator templates.",
+      "learnMore": "Learn more about IoT solutions >"
+    },
+    "partners": {
+      "partners": "Partners",
+      "joinPnP": "Join the IoT Plug and Play preview program. ",
+      "certifyNonPnP": "Certify with our non-PnP certification platform. ",
+      "learnMore": "Learn More >"
+    }
   }
 }
