@@ -37,6 +37,7 @@ $linkPanel-container-min-height: 50 * $grid-size;
 
 .linkPanel-content {
     display: flex;
+    flex-wrap: wrap;
 }
 
 .linkPanel-container {
