@@ -2,8 +2,9 @@
 
 // @font-face urls don't work with CSS modules, so we need to declare them in a
 // non-module file: https://github.com/css-modules/css-modules/issues/95
+// IMPORTANT: Host these files yourself for production apps, don't take a dependency on azureiotcentral.com:
 @font-face {
   font-family: $icon-font-family;
-  src: url("https://static.azureiotcentral.com/ux/static/media/segmdl2.1.61.38af5f02.woff") format('woff'),
-      url("https://static.azureiotcentral.com/ux/static/media/segmdl2.1.61.35c95dc2.ttf") format('truetype');
+  src: url("https://static.azureiotcentral.com/platformassets/ux-renderer/v1/media/segmdl2.1.61.38af5f02.woff") format('woff'),
+       url("https://static.azureiotcentral.com/platformassets/ux-renderer/v1/media/segmdl2.1.61.35c95dc2.ttf") format('truetype');
 }
